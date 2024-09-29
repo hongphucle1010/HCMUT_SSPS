@@ -51,6 +51,19 @@ const Router: React.FC = () => {
       path: "/login",
       element: <LogIn />,
     },
+    {
+      path: "*",
+      element: (
+        <MainLayout>
+          <ErrorPage />
+        </MainLayout>
+      ),
+      errorElement: (
+        <MainLayout>
+          <ErrorPage />
+        </MainLayout>
+      ),
+    },
   ];
 
   const adminRoutes = [
@@ -59,6 +72,19 @@ const Router: React.FC = () => {
       element: (
         <MainLayout>
           <Content />
+        </MainLayout>
+      ),
+    },
+    {
+      path: "*",
+      element: (
+        <MainLayout>
+          <ErrorPage />
+        </MainLayout>
+      ),
+      errorElement: (
+        <MainLayout>
+          <ErrorPage />
         </MainLayout>
       ),
     },
