@@ -1,18 +1,21 @@
-type Role = "student" | "admin" | "guest"
+import { Dispatch } from "redux"
+import { logInReducer, logOutReducer } from "../../lib/redux/reducers/userState"
+import { Role } from "../../lib/redux/reducers/types"
+
 async function fakeLogInApi(username: string, password: string)
 {
     let success = false
-    let role : Role = "guest"
+    let role : Role = "GUEST"
     let name = ""
     
     if (username == "admin" && password == "admin") {
         success = true
-        role = "admin"
-        name = "Admin"
+        role = "ADMIN"
+        name = "SPSO"
     }
     if (username == "student" && password == "student") {
         success = true
-        role = "student"
+        role = "STUDENT"
         name = "TN01-03"
     }
     return { success, role, name }
@@ -20,20 +23,22 @@ async function fakeLogInApi(username: string, password: string)
 
 export async function logIn(
     username: string,
-    password: string
+    password: string,
+    dispatch: Dispatch
 )
 {
     const { success, role, name } = await fakeLogInApi(username, password)
     if (success) {
-        localStorage.setItem("role", role)
-        localStorage.setItem("name", name)
+        dispatch(logInReducer({
+            name: name,
+            role: role
+        }))
         return true
     }
     return false
 }
 
-export function logOut()
+export function logOut(dispatch: Dispatch)
 {
-    localStorage.removeItem("role")
-    localStorage.removeItem("name")
+    dispatch(logOutReducer());
 }
