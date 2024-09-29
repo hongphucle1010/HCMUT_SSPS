@@ -4,11 +4,11 @@ Project được xây dựng dựa trên framework [React](https://reactjs.org/)
 
 ## Thành viên tham gia project
 
-- Lê Hồng Phúc – 2212615
-- Huỳnh Lê Đăng Khoa – 2211590
-- Lê Ngọc Vinh – 2213964
-- Lê Văn Anh Khoa – 2211605
-- Lê Phúc Hoàng – 2211081
+- 2212615 - Lê Hồng Phúc
+- 2211590 - Huỳnh Lê Đăng Khoa
+- 2213964 - Lê Ngọc Vinh
+- 2211605 - Lê Văn Anh Khoa
+- 2211081 - Lê Phúc Hoàng
 
 ## Yêu cầu
 - [Node.js](https://nodejs.org/) (khuyến nghị sử dụng phiên bản 14.x hoặc mới hơn)
