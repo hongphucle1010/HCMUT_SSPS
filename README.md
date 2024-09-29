@@ -1,50 +1,39 @@
-# React + TypeScript + Vite
+# Project HCMUT Student Smart Printing Service (HCMUT_SSPS)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Project được xây dựng dựa trên framework [React](https://reactjs.org/) và ngôn ngữ [TypeScript](https://www.typescriptlang.org/).
 
-Currently, two official plugins are available:
+## Thành viên tham gia project
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Lê Hồng Phúc – 2212615
+- Huỳnh Lê Đăng Khoa – 2211590
+- Lê Ngọc Vinh – 2213964
+- Lê Văn Anh Khoa – 2211605
+- Lê Phúc Hoàng – 2211081
 
-## Expanding the ESLint configuration
+## Yêu cầu
+- [Node.js](https://nodejs.org/) (khuyến nghị sử dụng phiên bản 14.x hoặc mới hơn)
+- [npm](https://www.npmjs.com/)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Cài đặt
 
-- Configure the top-level `parserOptions` property like this:
+```bash
+# Clone Repository
+git clone https://github.com/hongphucle1010/HCMUT_SPSS.git
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+# Move to repository folder
+cd HCMUT_SPSS
+
+# Cài đặt các gói phụ thuộc
+npm install
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+## Chạy code trong chế độ dev
+```bash
+npm run dev
 ```
+
+## Build chương trình
+```bash
+npm run build
+```
+Mặc định file được build sẽ được tạo trong thư mục `dist`
