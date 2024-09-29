@@ -68,7 +68,7 @@ const Form: React.FC<FormProps> = ({ setHidden }) => {
           }}
         />
       </div>
-      <Button type="submit" onClick={(event) => handleLogin(event)}>
+      <Button type="submit" onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => handleLogin(event)}>
         Đăng nhập
       </Button>
     </form>
