@@ -1,6 +1,12 @@
 # Project HCMUT Student Smart Printing Service (HCMUT_SSPS)
 
-Project được xây dựng dựa trên framework [React](https://reactjs.org/) và ngôn ngữ [TypeScript](https://www.typescriptlang.org/).
+Công nghệ sử dụng:
+- Framework [React](https://reactjs.org/) 
+- Ngôn ngữ [TypeScript](https://www.typescriptlang.org/).
+- [Tailwind CSS](https://tailwindcss.com/) để thiết kế giao diện.
+- [Vite](https://vitejs.dev/) để build project.
+- [ESLint](https://eslint.org/) và [Prettier](https://prettier.io/) để kiểm tra code và format code.
+
 
 ## Thành viên tham gia project
 
@@ -18,10 +24,10 @@ Project được xây dựng dựa trên framework [React](https://reactjs.org/)
 
 ```bash
 # Clone Repository
-git clone https://github.com/hongphucle1010/HCMUT_SPSS.git
+git clone https://github.com/hongphucle1010/HCMUT_SSPS.git
 
 # Move to repository folder
-cd HCMUT_SPSS
+cd HCMUT_SSPS
 
 # Cài đặt các gói phụ thuộc
 npm install
