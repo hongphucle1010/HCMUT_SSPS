@@ -1,11 +1,16 @@
 # Project HCMUT Student Smart Printing Service (HCMUT_SSPS)
 
+Deployments: 
+- [Frontend](https://hcmut-ssps.vercel.app/)
+- [Backend](https://hcmutssps.azurewebsites.net/)
+
 Công nghệ sử dụng:
-- Framework [React](https://reactjs.org/) 
+- Framework [ReactJS](https://reactjs.org/) 
 - Ngôn ngữ [TypeScript](https://www.typescriptlang.org/).
-- [Tailwind CSS](https://tailwindcss.com/) để thiết kế giao diện.
+- [Tailwind CSS](https://tailwindcss.com/) và [Flowbite](https://flowbite.com/) để thiết kế giao diện.
 - [Vite](https://vitejs.dev/) để build project.
 - [ESLint](https://eslint.org/) và [Prettier](https://prettier.io/) để kiểm tra code và format code.
+- Backend repository: https://github.com/hongphucle1010/HCMUT_SSPS_Backend
 
 
 ## Thành viên tham gia project
