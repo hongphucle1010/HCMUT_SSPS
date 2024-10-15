@@ -1,10 +1,10 @@
 import { Button } from "flowbite-react";
 import { Link } from "react-router-dom";
-import { logOut } from "../../api/hcmut_sso/login";
 import { Dispatch } from "redux";
 import { useDispatch } from "react-redux";
 import { RootState } from "../../lib/redux/store";
 import { useSelector } from "react-redux";
+import { logOut } from "../../utils/authentication/authentication";
 
 interface ContentProps {
   name: string;

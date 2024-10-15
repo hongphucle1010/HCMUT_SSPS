@@ -3,6 +3,7 @@ import { Role, User } from "./types";
 
 interface AuthorizationState {
   value: {
+    id: string;
     name: string;
     role: Role;
   };
@@ -12,12 +13,14 @@ const authorization = createSlice({
   name: "authorization",
   initialState: {
     value: {
+      id: "",
       name: "",
       role: "GUEST" as Role,
     },
   },
   reducers: {
     logOutReducer: (state: AuthorizationState) => {
+      state.value.id = "";
       state.value.name = "";
       state.value.role = "GUEST";
     },
