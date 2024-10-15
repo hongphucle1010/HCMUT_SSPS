@@ -1,4 +1,4 @@
 export interface ResponseWithMessage {
-  message: string;
-  response: any;
+  message: string
+  response: any
 }
