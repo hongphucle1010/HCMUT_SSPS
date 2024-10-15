@@ -1,7 +1,7 @@
 # Project HCMUT Student Smart Printing Service (HCMUT_SSPS)
 
 Deployments: 
-- [Frontend](https://hcmut-ssps.vercel.app/)
+- [Frontend](https://hcmutssps.vercel.app/)
 - [Backend](https://hcmutssps.azurewebsites.net/)
 
 Công nghệ sử dụng:
