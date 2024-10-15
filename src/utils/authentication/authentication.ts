@@ -16,11 +16,13 @@ export function getToken() {
 export async function logIn(username: string, password: string, dispatch: Dispatch) {
   const response = await logInApi(username, password)
   setToken(response.data.token)
-  dispatch(logInReducer({
-    id: response.data.student.id,
-    name: response.data.student.name,
-    role: "STUDENT"
-  }))
+  dispatch(
+    logInReducer({
+      id: response.data.student.id,
+      name: response.data.student.name,
+      role: 'STUDENT'
+    })
+  )
 }
 
 export function logOut(dispatch: Dispatch) {

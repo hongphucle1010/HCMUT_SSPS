@@ -1,36 +1,35 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Role, User } from "./types";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { Role, User } from './types'
 
 interface AuthorizationState {
   value: {
-    id: string;
-    name: string;
-    role: Role;
-  };
+    id: string
+    name: string
+    role: Role
+  }
 }
 
 const authorization = createSlice({
-  name: "authorization",
+  name: 'authorization',
   initialState: {
     value: {
-      id: "",
-      name: "",
-      role: "GUEST" as Role,
-    },
+      id: '',
+      name: '',
+      role: 'GUEST' as Role
+    }
   },
   reducers: {
     logOutReducer: (state: AuthorizationState) => {
-      state.value.id = "";
-      state.value.name = "";
-      state.value.role = "GUEST";
+      state.value.id = ''
+      state.value.name = ''
+      state.value.role = 'GUEST'
     },
     logInReducer: (state: AuthorizationState, action: PayloadAction<User>) => {
-      state.value = action.payload;
-    },
-  },
-});
+      state.value = action.payload
+    }
+  }
+})
 
-export const { logOutReducer, logInReducer } =
-  authorization.actions;
+export const { logOutReducer, logInReducer } = authorization.actions
 
-export default authorization.reducer;
+export default authorization.reducer

@@ -8,11 +8,11 @@ interface SignUpResponse {
 }
 
 export interface StatusResponse {
-  message: string;
+  message: string
   user: {
-    id: number;
-    username: string;
-    iat: number;
-    exp: number;
-  };
+    id: number
+    username: string
+    iat: number
+    exp: number
+  }
 }

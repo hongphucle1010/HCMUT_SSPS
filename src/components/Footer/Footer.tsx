@@ -1,9 +1,5 @@
 const Footer = () => {
-  return (
-    <footer className="">
-      Đây là Footer
-    </footer>
-  )
-};
+  return <footer className=''>Đây là Footer</footer>
+}
 
-export default Footer;
+export default Footer

@@ -1,9 +1,9 @@
-import "./App.css";
-import Router from "./routes";
-import React from "react";
+import './App.css'
+import Router from './routes'
+import React from 'react'
 
 const App: React.FC = () => {
-  return <Router />;
-};
+  return <Router />
+}
 
-export default App;
+export default App

@@ -1,8 +1,8 @@
-import { combineReducers } from "redux";
-import authorizationReducer from "./userState";
+import { combineReducers } from 'redux'
+import authorizationReducer from './userState'
 
 const rootReducer = combineReducers({
-  user: authorizationReducer,
-});
+  user: authorizationReducer
+})
 
-export default rootReducer;
+export default rootReducer
