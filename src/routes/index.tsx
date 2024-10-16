@@ -6,6 +6,13 @@ import LogIn from '../pages/LogInSSO/LogIn'
 import { useSelector } from 'react-redux'
 import { RootState } from '../lib/redux/store'
 import LogOut from '../components/LogOut/LogOut'
+import Step1 from '../pages/Print/StepOne'
+import Step2 from '../pages/Print/StepTwo'
+import Map1 from '../pages/Print/Map1'
+import Map2 from '../pages/Print/Map2'
+import History from '../pages/History'
+import Transaction from '../pages/History/Transaction'
+import Statistic from '../pages/History/Statistic'
 
 const Router: React.FC = () => {
   const role = useSelector((state: RootState) => state.user.value.role)
@@ -33,19 +40,19 @@ const Router: React.FC = () => {
       children: [
         {
           path: 'step1',
-          element: <Content />
+          element: <Step1 />
         },
         {
           path: 'step2',
-          element: <Content />
+          element: <Step2 />
         },
         {
           path: 'map1',
-          element: <Content />
+          element: <Map1 />
         },
         {
           path: 'map2',
-          element: <Content />
+          element: <Map2 />
         }
       ]
     },
@@ -59,15 +66,15 @@ const Router: React.FC = () => {
       children: [
         {
           path: '',
-          element: <Content />
+          element: <History />
         },
         {
           path: 'transaction',
-          element: <Content />
+          element: <Transaction />
         },
         {
           path: 'statistic',
-          element: <Content />
+          element: <Statistic />
         }
       ]
     },

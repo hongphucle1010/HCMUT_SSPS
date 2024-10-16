@@ -1,5 +1,6 @@
 import React from 'react'
 import styles from './ErrorPage.module.scss'
+import { Link } from 'react-router-dom'
 
 const ErrorPage: React.FC = () => {
   return (
@@ -14,9 +15,9 @@ const ErrorPage: React.FC = () => {
               <div className={styles.contant_box_404}>
                 <h3 className={styles.h2}>Look like you're lost</h3>
                 <p>the page you are looking for not avaible!</p>
-                <a href='/' className={styles.link_404}>
+                <Link to='/' className={styles.link_404}>
                   Go to Home
-                </a>
+                </Link>
               </div>
             </div>
           </div>
