@@ -12,7 +12,7 @@ interface NavBarElementProps {
 }
 const NavBarElement: React.FC<NavBarElementProps> = ({ text, icon }) => {
   return (
-    <div className='flex items-center p-2 hover:bg-black hover:text-white'>
+    <div className='flex items-center p-2 hover:bg-black hover:text-white cursor-pointer'>
       {icon}
         <p className='font-bold grow-1 w-full text-center'>{text}</p>
     </div>
@@ -30,7 +30,7 @@ const HistoryLayout: React.FC<LayoutProps> = ({ children }) => {
           <NavBarElement text='Thống kê' icon={<IoStatsChart />} />
         </div>
 
-        <div className='flex-1 bg-slate-500'>
+        <div className='flex-1'>
           {children}
           <Outlet />
         </div>
