@@ -2,9 +2,7 @@ import React from 'react'
 
 const Statistic: React.FC = () => {
   return (
-    <div>
-      <h1>Statistic</h1>
-    </div>
+    <div>Hello</div>
   )
 }
 export default Statistic
