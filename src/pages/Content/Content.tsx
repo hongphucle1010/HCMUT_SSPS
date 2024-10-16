@@ -9,14 +9,14 @@ export default function Content() {
     <div className='min-h-screen grid grid-cols-5'>
       <div className='col-span-2 relative'>
         <img src={banner} alt='banner' className='absolute' />
-        <img src={image2} alt='image' className={`absolute ${styles.bottom} left-60`} />
+        <img src={image2} alt='image' className={`absolute ${styles.bottom} right-52`} />
         <div className='absolute left-40 top-52'>
           <p className='font-bold text-5xl mb-5'>HCMUT - SSPS</p>
           <p className='font-bold text-xl'>Dịch vụ in ấn thông minh</p>
           <p className='font-bold mb-5 text-xl'>Dành cho sinh viên trường Đại học Bách Khoa</p>
-          <Button outline gradientDuoTone='purpleToBlue' className='w-48'>
+          <Button outline gradientDuoTone='purpleToBlue' className='w-52'>
             <div className='flex justify-between items-center w-full'>
-              <div className='text-lg'>Hướng dẫn </div>
+              <div className='text-lg font-bold'>HƯỚNG DẪN </div>
               <svg
                 className='w-8 h-8 text-gray-800 dark:text-white'
                 aria-hidden='true'
@@ -40,7 +40,7 @@ export default function Content() {
       </div>
       <div className='col-span-3 grid-rows-3'>
         <div className='row-span-2 flex items-center justify-center'>
-        <img src={image3} alt='image' className='mt-28'/>
+          <img src={image3} alt='image' className='mt-28 px-8' />
         </div>
 
         <div className='relative row-span-1'>
