@@ -5,7 +5,7 @@ import styles from './StepOne.module.scss'
 const Step1: React.FC = () => {
   return (
     <div>
-      <img src={logo} alt='HCMUT' className={&{styles.myImage}}/>
+      <img src={logo} alt='logo' className={styles.myImage} />
     </div>
   )
 }
