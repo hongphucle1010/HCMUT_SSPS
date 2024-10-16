@@ -6,3 +6,15 @@
     margin: auto;
     height: 80vh;
 }
+
+.returnBtn{
+    display: flex;
+    align-items: center;
+    background-color: #1488D8;
+    color: white;
+    width: 120px;
+    justify-content: space-around;
+    padding: 10px 5px;
+    margin-left: 5%;
+    margin-top: 10px;
+}
