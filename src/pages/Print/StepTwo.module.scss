@@ -24,6 +24,7 @@
     background-color: yellow;
     height: 100vh;
     width: 50%;
+    flex-direction: column;
 }
 
 .theFile {
@@ -59,4 +60,15 @@
     padding: 10px 5px;
     margin-left: 5%;
     margin-top: 10px;
+}
+
+.imDiv {
+    display: block;
+    height: 100px;
+    display: flex;
+}
+
+.img_ltk {
+    display: flex;
+    flex-direction: column;
 }
