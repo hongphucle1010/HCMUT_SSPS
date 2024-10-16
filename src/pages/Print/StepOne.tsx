@@ -1,12 +1,7 @@
 import React from 'react'
-import logo from '../../assets/HCMUT_official_logo.png'
-import styles from './StepOne.module.scss'
+import Dropzone from '../../components/Dropzone/Dropzone'
 
 const Step1: React.FC = () => {
-  return (
-    <div>
-      <img src={logo} alt='logo' className={styles.myImage} />
-    </div>
-  )
+  return <Dropzone />
 }
 export default Step1
