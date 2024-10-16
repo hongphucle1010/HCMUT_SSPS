@@ -1,10 +1,25 @@
-.div1 {
+.theWhole {
     display: flex;
-    height: 100vh;
+    flex-direction: column;
+}
+
+.body {
+    display: flex;
+    background-color: white;
+    height: 80vh;
+}
+
+.btn_div {
+    display: flex;
+    justify-content: space-between;
+    height: 20vh;
+    padding-left: 5%;
+    padding-right: 5%;
+    width: 100%;
 }
 
 .h1 {
-    margin-left: 5%;
+    padding-left: 10%;
     padding-top: 2vh;
     font-size: 28px;
     font-weight: bold;
@@ -13,44 +28,45 @@
 
 .step2 {
     display: flex;
-    background-color: white;
     height: 100vh;
-    width: 50%;
+    width: 48%;
     flex-direction: column;
 }
 
 .step3 {
     display: flex;
-    background-color: yellow;
     height: 100vh;
-    width: 50%;
+    width: 48%;
     flex-direction: column;
 }
 
 .theFile {
-    height: 50px;
-    margin-top: 20px;
-    margin-left: 10%;
-    width: 200px;
+    height: 10vh;
+    margin-left: 15%;
     font-size: 16px;
     display: flex;
     align-items: center;
-    gap: 8px;
 }
 
 .formDiv {
-    margin-top: 20px;
+    margin-top: 2vh;
+    height: 60vh;
+    margin-left: 15%;
 }
 
 .theForm {
-    margin-left: 10%;
-    height: 60vh;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 2vh;
 }
 
-.returnBtn{
+.formDiv2 {
+    margin-top: 20px;
+    height: 70vh;
+    margin-left: 10%;
+}
+
+.btn{
     display: flex;
     align-items: center;
     background-color: #1488D8;
@@ -64,11 +80,55 @@
 
 .imDiv {
     display: block;
-    height: 100px;
     display: flex;
 }
 
-.img_ltk {
+.ltk_cell {
     display: flex;
     flex-direction: column;
+    width: 40%;
+}
+
+.dan_cell {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+}
+
+.map {
+    height: 20vh;
+}
+
+.lbl {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.center{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.step3_margin {
+    margin-top: 10vh;
+}
+
+.print_btn_div {
+    height: 100vh;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+}
+
+.barwidth {
+    width: 40%;
+}
+
+.reminder {
+    font-size: 12px;
+}
+
+.left_align_5 {
+    margin-left: 5%;
 }
