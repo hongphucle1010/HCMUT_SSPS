@@ -14,7 +14,7 @@ const NavBarElement: React.FC<NavBarElementProps> = ({ text, icon }) => {
   return (
     <div className='flex items-center p-2 hover:bg-black hover:text-white cursor-pointer'>
       {icon}
-        <p className='font-bold grow-1 w-full text-center'>{text}</p>
+      <p className='font-bold grow-1 w-full text-center'>{text}</p>
     </div>
   )
 }
@@ -24,13 +24,13 @@ const HistoryLayout: React.FC<LayoutProps> = ({ children }) => {
     <div className={`min-h-screen`}>
       <Header />
       <div className='flex'>
-        <div className='flex-none w-64 min-h-screen border-r-4 border-black'>
+        <div className='flex-none w-64 min-h-screen border-r-4 border-black fixed'>
           <NavBarElement text='Lịch sử trang in' icon={<FaRegClipboard />} />
           <NavBarElement text='Lịch sử thanh toán' icon={<FaRegClipboard />} />
           <NavBarElement text='Thống kê' icon={<IoStatsChart />} />
         </div>
 
-        <div className='flex-1'>
+        <div className='flex-1 ml-64'>
           {children}
           <Outlet />
         </div>
