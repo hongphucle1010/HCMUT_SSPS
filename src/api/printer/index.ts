@@ -13,7 +13,7 @@ export async function createPrinterApi(printer: PrinterCreateParams) {
 
 export async function getPrinterApi(printerId: string) {
   try {
-    const response = await apiClient.get<PrinterWithLocation>(`${printerPath}?id=${printerId}`)
+    const response = await apiClient.get<PrinterWithLocation>(`${printerPath}/${printerId}`)
     return response
   } catch (error) {
     console.error(error)

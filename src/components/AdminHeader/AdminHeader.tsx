@@ -23,10 +23,10 @@ const AdminHeader: React.FC = () => {
             Trang chủ
           </NavLink>
           <NavLink to='/printer' className={({ isActive }) => (isActive ? `${styles['active-link']}` : '')}>
-            Cấu hình máy in
+            Thêm máy in
           </NavLink>
-          <NavLink to='/history' className={({ isActive }) => (isActive ? `${styles['active-link']}` : '')}>
-            Lịch sử in
+          <NavLink to='/configurations' className={({ isActive }) => (isActive ? `${styles['active-link']}` : '')}>
+            Chỉnh sửa định dạng in ấn
           </NavLink>
           <Dropdown label={user.name} arrowIcon={false} className={`shadow-md shadow-slate-200 z-10`} inline>
             <Dropdown.Item icon={HiOutlineAdjustments} onClick={() => navigate('/settings')}>

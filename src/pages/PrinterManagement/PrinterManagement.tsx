@@ -44,7 +44,7 @@ const PrinterList: React.FC = () => {
   }
 
   return (
-    <div className='w-1/2'>
+    <div className='w-1/2 overflow-x-auto '>
       <h1 className='text-2xl font-bold mb-4'>Printer List</h1>
       {printers.length === 0 ? (
         <p>No printers available</p>

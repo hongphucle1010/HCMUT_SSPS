@@ -20,3 +20,9 @@ export const allPrinterPath = '/printer/all'
 
 // Printing Log
 export const printingLogPath = '/printinglog'
+
+// Configuration
+export const configurationPath = '/config'
+
+// Student path
+export const studentPath = '/student'

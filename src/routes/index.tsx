@@ -20,6 +20,8 @@ import SpsoLogIn from '../pages/LogInSSO/SpsoLogIn'
 import AdminLayout from '../layout/AdminLayout/AdminLayout'
 import AdminLandingPage from '../pages/AdminLandingPage/AdminLandingPage'
 import PrinterManagement from '../pages/PrinterManagement/PrinterManagement'
+import ConfigurationPage from '../pages/ConfigurationPage/ConfigurationPage'
+import StudentInfoPage from '../pages/StudentInfoPage/StudentInfoPage'
 
 const Router: React.FC = () => {
   const role = useSelector((state: RootState) => state.user.value.role)
@@ -36,6 +38,14 @@ const Router: React.FC = () => {
     {
       path: '/logout',
       element: <LogOut />
+    },
+    {
+      path: '/settings',
+      element: (
+        <MainLayout>
+          <StudentInfoPage />
+        </MainLayout>
+      )
     },
     {
       path: '/print',
@@ -138,6 +148,14 @@ const Router: React.FC = () => {
       element: (
         <AdminLayout>
           <PrinterManagement />
+        </AdminLayout>
+      )
+    },
+    {
+      path: '/configurations',
+      element: (
+        <AdminLayout>
+          <ConfigurationPage />
         </AdminLayout>
       )
     },

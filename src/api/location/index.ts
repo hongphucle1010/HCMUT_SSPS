@@ -13,7 +13,7 @@ export async function addLocationApi(location: LocationCreateParams) {
 
 export async function getLocationApi(locationId: string) {
   try {
-    const response = await apiClient.get<Location>(`${locationPath}?id=${locationId}`)
+    const response = await apiClient.get<Location>(`${locationPath}/${locationId}`)
     return response
   } catch (error) {
     console.error(error)
