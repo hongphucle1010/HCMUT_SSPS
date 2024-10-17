@@ -1,7 +1,7 @@
-import { getStatusPath, logInPath, signUpPath } from '../../config/apiPath'
+import { getStatusPath, logInPath, signUpPath, spsoLogInPath, spsoSignUpPath } from '../../config/apiPath'
 import { getToken } from '../../utils/authentication/authentication'
 import { apiClient } from '..'
-import { LogInResponse, SignUpResponse, StatusResponse } from './types'
+import { LogInResponse, SignUpResponse, SpsoLogInResponse, SpsoSignUpResponse, StatusResponse } from './types'
 
 function setAuthToken(token: string | null) {
   if (token) {
@@ -30,6 +30,34 @@ export async function signUpApi(username: string, password: string, name: string
     const response = await apiClient.post<SignUpResponse>(signUpPath, {
       name,
       username,
+      password
+    })
+    return response
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+
+export async function spsoLogInApi(email: string, password: string) {
+  try {
+    setAuthToken(getToken())
+    const response = await apiClient.post<SpsoLogInResponse>(spsoLogInPath, {
+      email,
+      password
+    })
+    return response
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+
+export async function spsoSignUpApi(email: string, password: string, name: string) {
+  try {
+    const response = await apiClient.post<SpsoSignUpResponse>(spsoSignUpPath, {
+      name,
+      email,
       password
     })
     return response

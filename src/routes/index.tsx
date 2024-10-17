@@ -15,6 +15,8 @@ import Transaction from '../pages/History/Transaction'
 import Statistic from '../pages/History/Statistic'
 import HistoryLayout from '../layout/HistoryLayout/HistoryLayout'
 import SignUp from '../pages/LogInSSO/SignUp'
+import SpsoSignUp from '../pages/LogInSSO/SpsoSignUp'
+import SpsoLogIn from '../pages/LogInSSO/SpsoLogIn'
 
 const Router: React.FC = () => {
   const role = useSelector((state: RootState) => state.user.value.role)
@@ -106,11 +108,11 @@ const Router: React.FC = () => {
     },
     {
       path: '/spso/login',
-      element: <SignUp />
+      element: <SpsoLogIn />
     },
     {
       path: '/spso/signup',
-      element: <SignUp />
+      element: <SpsoSignUp />
     },
     {
       path: '*',
@@ -127,6 +129,10 @@ const Router: React.FC = () => {
           <Content />
         </MainLayout>
       )
+    },
+    {
+      path: '/logout',
+      element: <LogOut />
     },
     {
       path: '*',
