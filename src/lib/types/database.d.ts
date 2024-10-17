@@ -8,3 +8,14 @@ interface Student {
   updatedAt: Date
 }
 type StudentWithoutPassword = Omit<Student, 'password'>
+
+interface SPSO {
+  password: string
+  name: string
+  id: string
+  createdAt: Date
+  updatedAt: Date
+  email: string
+}
+
+type SPSOWithoutPassword = Omit<SPSO, 'password'>
