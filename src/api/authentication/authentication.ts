@@ -25,7 +25,7 @@ export async function logInApi(username: string, password: string) {
   }
 }
 
-export async function signUpApi(name: string, username: string, password: string) {
+export async function signUpApi(username: string, password: string, name: string) {
   try {
     const response = await apiClient.post<SignUpResponse>(signUpPath, {
       name,

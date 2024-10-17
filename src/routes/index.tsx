@@ -14,6 +14,7 @@ import History from '../pages/History'
 import Transaction from '../pages/History/Transaction'
 import Statistic from '../pages/History/Statistic'
 import HistoryLayout from '../layout/HistoryLayout/HistoryLayout'
+import SignUp from '../pages/LogInSSO/SignUp'
 
 const Router: React.FC = () => {
   const role = useSelector((state: RootState) => state.user.value.role)
@@ -98,6 +99,18 @@ const Router: React.FC = () => {
     {
       path: '/login',
       element: <LogIn />
+    },
+    {
+      path: '/signup',
+      element: <SignUp />
+    },
+    {
+      path: '/spso/login',
+      element: <SignUp />
+    },
+    {
+      path: '/spso/signup',
+      element: <SignUp />
     },
     {
       path: '*',
