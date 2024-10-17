@@ -7,10 +7,10 @@ const Dropzone: React.FC = () => {
         htmlFor='dropzone-file'
         className='flex flex-col items-center justify-center border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600'
         style={{
-          width: '80%',
-          height: '400px',
           margin: 'auto',
-          marginTop: '7%'
+          marginTop: '10px',
+          width: '95%',
+          height: '400px'
         }}
       >
         <div className='flex flex-col items-center justify-center pt-5 pb-6'>

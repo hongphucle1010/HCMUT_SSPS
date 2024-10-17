@@ -1,9 +1,49 @@
-.center{
+.centerBox{
+    text-align: center;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+    height: 500px;
+    margin: auto;
+    margin-top: 5%;
+    background-color: rgb(249, 250, 251);
+}
+
+.bar{
     text-align: center;
     display: block;
     justify-content: center;
     align-items: center;
     margin: auto;
-    width: 100vh;
-    height: 100vh;
+    width: 100%;
+    height: 80px;
+    background-color: white;
+    padding: 5px;
+}
+
+.buttonBar{
+    text-align: center;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    width: 40%;
+    height: 100%;
+    background-color: rgb(249, 250, 251);
+    display: flex;
+    flex-direction: row;
+    padding: 7px;
+}
+
+.button{
+    text-align: center;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    width: 49%;
+    height: 90%;
+    background-color: lightblue;
+    border-radius: 10px;
 }
