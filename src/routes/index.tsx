@@ -17,6 +17,9 @@ import HistoryLayout from '../layout/HistoryLayout/HistoryLayout'
 import SignUp from '../pages/LogInSSO/SignUp'
 import SpsoSignUp from '../pages/LogInSSO/SpsoSignUp'
 import SpsoLogIn from '../pages/LogInSSO/SpsoLogIn'
+import AdminLayout from '../layout/AdminLayout/AdminLayout'
+import AdminLandingPage from '../pages/AdminLandingPage/AdminLandingPage'
+import PrinterManagement from '../pages/PrinterManagement/PrinterManagement'
 
 const Router: React.FC = () => {
   const role = useSelector((state: RootState) => state.user.value.role)
@@ -125,9 +128,17 @@ const Router: React.FC = () => {
     {
       path: '/',
       element: (
-        <MainLayout>
-          <Content />
-        </MainLayout>
+        <AdminLayout>
+          <AdminLandingPage />
+        </AdminLayout>
+      )
+    },
+    {
+      path: '/printer',
+      element: (
+        <AdminLayout>
+          <PrinterManagement />
+        </AdminLayout>
       )
     },
     {

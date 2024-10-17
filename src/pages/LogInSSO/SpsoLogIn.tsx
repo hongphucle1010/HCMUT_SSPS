@@ -121,6 +121,10 @@ const SpsoLogIn: React.FC = () => {
               <Button>Tạo tài khoản SPSO</Button>
             </Link>
           </div>
+          <div className='p-2'>
+            <p>Mail: hongphuc@spso.com</p>
+            <p>Password: 1010</p>
+          </div>
         </div>
       </div>
     </>

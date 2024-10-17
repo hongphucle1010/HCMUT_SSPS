@@ -12,7 +12,7 @@ export default {
   theme: {
     extend: {},
     fontFamily: {
-      sans: ["Inter", "sans-serif"],
+      sans: ["Roboto", "sans-serif"],
     },
   },
   plugins: [flowbiteReact.plugin(), plugin],
