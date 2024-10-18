@@ -1,9 +1,11 @@
 import React from 'react'
+import { Table } from 'flowbite-react'
 
 const Transaction: React.FC = () => {
   return (
     <div>
-      <h1>Transaction</h1>
+      <Table>
+      </Table>
     </div>
   )
 }
