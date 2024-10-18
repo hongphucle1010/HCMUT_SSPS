@@ -13,6 +13,7 @@ import Map2 from '../pages/Print/Map2'
 import History from '../pages/History'
 import Transaction from '../pages/History/Transaction'
 import Statistic from '../pages/History/Statistic'
+import HistoryLayout from '../layout/HistoryLayout/HistoryLayout'
 
 const Router: React.FC = () => {
   const role = useSelector((state: RootState) => state.user.value.role)
@@ -59,9 +60,9 @@ const Router: React.FC = () => {
     {
       path: '/history',
       element: (
-        <MainLayout>
+        <HistoryLayout>
           <span></span>
-        </MainLayout>
+        </HistoryLayout>
       ),
       children: [
         {
