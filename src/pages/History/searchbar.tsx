@@ -1,14 +1,17 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { Input } from 'antd'
+import type { GetProps } from 'antd'
 
 const SearchBar: React.FC = () => {
-  const [searchInput, setSearchInput] = useState('')
+  type SearchProps = GetProps<typeof Input.Search>
+  const onSearch: SearchProps['onSearch'] = (value, _e, info) => console.log(info?.source, value)
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault()
-    setSearchInput(e.target.value)
-  }
-
-  return <input type='search' placeholder='Search' onChange={handleChange} value={searchInput} />
+  const { Search } = Input
+  return (
+    <div>
+      <Search placeholder='Search' allowClear onSearch={onSearch} style={{ width: '100%' }} />
+    </div>
+  )
 }
 
 export default SearchBar
