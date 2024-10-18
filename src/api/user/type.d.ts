@@ -24,4 +24,5 @@ interface StudentInfo {
   username: string
   id: string
   printBalance: number
+  name: string
 }

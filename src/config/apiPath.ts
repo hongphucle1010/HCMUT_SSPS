@@ -23,6 +23,8 @@ export const printingLogPath = '/printinglog'
 
 // Configuration
 export const configurationPath = '/config'
+export const getTypesPath = '/filetype'
 
 // Student path
 export const studentPath = '/student'
+export const studentPagePath = '/student/page'
