@@ -76,7 +76,11 @@ const columns: ColumnsType<DataType> = [
   {
     title: 'Trạng thái',
     dataIndex: 'col7',
-    sorter: true,
+    filters: [
+      { text: 'Hoàn thành', value: 'Hoàn thành' },
+      { text: 'Đang in', value: 'Đang in' },
+      { text: 'Không hoàn thành', value: 'Không hoàn thành' }
+    ],
     width: '14%'
   }
 ]
