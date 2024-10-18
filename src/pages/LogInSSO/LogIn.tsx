@@ -59,6 +59,7 @@ const Form: React.FC<FormProps> = ({ setHidden }) => {
           type='password'
           required
           onChange={(event: React.FormEvent<HTMLInputElement>) => {
+            console.log(event.currentTarget.value)
             setPassword(event.currentTarget.value)
           }}
         />
