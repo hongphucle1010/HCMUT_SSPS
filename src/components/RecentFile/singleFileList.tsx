@@ -1,4 +1,5 @@
 import React from 'react'
+import { Table } from 'flowbite-react'
 
 const SingleFileList: React.FC<{
   fileName: string
@@ -6,12 +7,11 @@ const SingleFileList: React.FC<{
   timeUpload: string
 }> = ({ fileName, fileSize, timeUpload }) => {
   return (
-    <tr>
-      <td className='font-medium text-gray-900 whitespace-nowrap dark:text-white'>United States</td>
-      <td>{fileName}</td>
-      <td>{fileSize}</td>
-      <td>{timeUpload}</td>
-    </tr>
+    <Table.Row className='bg-white dark:border-gray-700 dark:bg-gray-800'>
+      <Table.Cell className='whitespace-nowrap font-medium text-gray-900 dark:text-white'>{fileName}</Table.Cell>
+      <Table.Cell>{fileSize}</Table.Cell>
+      <Table.Cell>{timeUpload}</Table.Cell>
+    </Table.Row>
   )
 }
 
