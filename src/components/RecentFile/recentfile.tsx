@@ -4,23 +4,23 @@ import SingleFileList from './singleFileList'
 
 interface FileInfo {
   fileName: string
-  fileSize: number
+  fileSize: string
   timeUpload: Date
 }
 const FakeRecentFileResult: FileInfo[] = [
   {
     fileName: 'test.pdf',
-    fileSize: 1000,
+    fileSize: '1000MB',
     timeUpload: new Date()
   },
   {
     fileName: 'another test.pdf',
-    fileSize: 2000,
+    fileSize: '2000KB',
     timeUpload: new Date()
   },
   {
     fileName: 'random file.docx',
-    fileSize: 1000,
+    fileSize: '1.2GB',
     timeUpload: new Date()
   }
 ]
