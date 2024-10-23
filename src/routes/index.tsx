@@ -17,6 +17,12 @@ import HistoryLayout from '../layout/HistoryLayout/HistoryLayout'
 import SignUp from '../pages/LogInSSO/SignUp'
 import SpsoSignUp from '../pages/LogInSSO/SpsoSignUp'
 import SpsoLogIn from '../pages/LogInSSO/SpsoLogIn'
+import AdminLayout from '../layout/AdminLayout/AdminLayout'
+import AdminLandingPage from '../pages/AdminLandingPage/AdminLandingPage'
+import PrinterManagement from '../pages/PrinterManagement/PrinterManagement'
+import ConfigurationPage from '../pages/ConfigurationPage/ConfigurationPage'
+import StudentInfoPage from '../pages/StudentInfoPage/StudentInfoPage'
+import TestingPage from '../pages/TestingPage/Test'
 
 const Router: React.FC = () => {
   const role = useSelector((state: RootState) => state.user.value.role)
@@ -33,6 +39,22 @@ const Router: React.FC = () => {
     {
       path: '/logout',
       element: <LogOut />
+    },
+    {
+      path: '/settings',
+      element: (
+        <MainLayout>
+          <StudentInfoPage />
+        </MainLayout>
+      )
+    },
+    {
+      path: '/test',
+      element: (
+        <MainLayout>
+          <TestingPage />
+        </MainLayout>
+      )
     },
     {
       path: '/print',
@@ -125,9 +147,25 @@ const Router: React.FC = () => {
     {
       path: '/',
       element: (
-        <MainLayout>
-          <Content />
-        </MainLayout>
+        <AdminLayout>
+          <AdminLandingPage />
+        </AdminLayout>
+      )
+    },
+    {
+      path: '/printer',
+      element: (
+        <AdminLayout>
+          <PrinterManagement />
+        </AdminLayout>
+      )
+    },
+    {
+      path: '/configurations',
+      element: (
+        <AdminLayout>
+          <ConfigurationPage />
+        </AdminLayout>
       )
     },
     {

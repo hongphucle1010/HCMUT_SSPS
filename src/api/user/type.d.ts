@@ -19,3 +19,10 @@ interface SPSO {
 }
 
 type SPSOWithoutPassword = Omit<SPSO, 'password'>
+
+interface StudentInfo {
+  username: string
+  id: string
+  printBalance: number
+  name: string
+}
