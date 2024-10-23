@@ -22,6 +22,7 @@ import AdminLandingPage from '../pages/AdminLandingPage/AdminLandingPage'
 import PrinterManagement from '../pages/PrinterManagement/PrinterManagement'
 import ConfigurationPage from '../pages/ConfigurationPage/ConfigurationPage'
 import StudentInfoPage from '../pages/StudentInfoPage/StudentInfoPage'
+import TestingPage from '../pages/TestingPage/Test'
 
 const Router: React.FC = () => {
   const role = useSelector((state: RootState) => state.user.value.role)
@@ -44,6 +45,14 @@ const Router: React.FC = () => {
       element: (
         <MainLayout>
           <StudentInfoPage />
+        </MainLayout>
+      )
+    },
+    {
+      path: '/test',
+      element: (
+        <MainLayout>
+          <TestingPage />
         </MainLayout>
       )
     },

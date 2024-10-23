@@ -26,7 +26,7 @@ const StudentInfoPage: React.FC = () => {
       const updatedBalance = fullInfo.printBalance + 30 // Add 30 pages to balance
       const response = await updateStudentPageBalanceApi(fullInfo.id, updatedBalance)
       setFullInfo((prev) => prev && { ...prev, printBalance: response.data.printBalance }) // Update balance in state
-    } catch (error) {
+    } catch {
       setError('Failed to update print balance.')
     } finally {
       setLoading(false)
