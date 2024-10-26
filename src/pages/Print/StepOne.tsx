@@ -4,7 +4,18 @@ import Dropzone from '../../components/Dropzone/Dropzone'
 import RecentFile from '../../components/RecentFile/recentfile'
 import { useState } from 'react'
 
-const Step1: React.FC = () => {
+interface StepOneProps {
+  setFile: React.Dispatch<React.SetStateAction<File | null>>
+  setIsInStepOne: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const Step1: React.FC<StepOneProps> = ({ setFile, setIsInStepOne }) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setFile(e.target.files[0])
+      setIsInStepOne(false)
+    }
+  }
   const [isInDropzone, setIsInDropzone] = useState(true)
   return (
     <div className={`${styles.centerBox} ${'shadow-2xl'}`}>
@@ -25,7 +36,7 @@ const Step1: React.FC = () => {
         </div>
       </div>
 
-      {isInDropzone ? <Dropzone /> : <RecentFile />}
+      {isInDropzone ? <Dropzone handleFileChange={handleChange} /> : <RecentFile />}
     </div>
   )
 }

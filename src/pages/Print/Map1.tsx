@@ -8,7 +8,7 @@ const Map1: React.FC = () => {
   return (
     <div>
       <img src={img_map1} className={`${styles.center}`}></img>
-      <Link to={'/print/step2'}>
+      <Link to={'/print'}>
         <div className={`${styles.returnBtn} rounded-md	`}>
           <LuArrowLeftCircle />
           <span>Quay về</span>
