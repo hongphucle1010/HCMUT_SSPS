@@ -23,6 +23,7 @@ import PrinterManagement from '../pages/PrinterManagement/PrinterManagement'
 import ConfigurationPage from '../pages/ConfigurationPage/ConfigurationPage'
 import StudentInfoPage from '../pages/StudentInfoPage/StudentInfoPage'
 import TestingPage from '../pages/TestingPage/Test'
+import GuestLayout from '../layout/GuestLayout/GuestLayout'
 
 const Router: React.FC = () => {
   const role = useSelector((state: RootState) => state.user.value.role)
@@ -115,9 +116,9 @@ const Router: React.FC = () => {
     {
       path: '/',
       element: (
-        <MainLayout>
+        <GuestLayout>
           <Content />
-        </MainLayout>
+        </GuestLayout>
       )
     },
     {
