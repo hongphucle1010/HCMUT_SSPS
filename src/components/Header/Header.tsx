@@ -29,19 +29,15 @@ const Header: React.FC = () => {
             Lịch sử in
           </NavLink>
 
-          {user.role == 'GUEST' ? (
-            <Link to='/login'>Đăng nhập</Link>
-          ) : (
-            <Dropdown label={user.name} arrowIcon={false} className={`shadow-md shadow-slate-200 z-10`} inline>
-              <Dropdown.Item icon={HiOutlineAdjustments} onClick={() => navigate('/settings')}>
-                Settings
-              </Dropdown.Item>
-              <Dropdown.Divider />
-              <Dropdown.Item icon={MdLogout} onClick={() => navigate('/logout')}>
-                Log out
-              </Dropdown.Item>
-            </Dropdown>
-          )}
+          <Dropdown label={user.name} arrowIcon={false} className={`shadow-md shadow-slate-200 z-10`} inline>
+            <Dropdown.Item icon={HiOutlineAdjustments} onClick={() => navigate('/settings')}>
+              Settings
+            </Dropdown.Item>
+            <Dropdown.Divider />
+            <Dropdown.Item icon={MdLogout} onClick={() => navigate('/logout')}>
+              Log out
+            </Dropdown.Item>
+          </Dropdown>
         </div>
       </nav>
     </div>
