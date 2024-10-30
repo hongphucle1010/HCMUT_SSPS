@@ -3,8 +3,16 @@ import styles from './StepOne.module.scss'
 import Dropzone from '../../components/Dropzone/Dropzone'
 import RecentFile from '../../components/RecentFile/recentfile'
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { setFileReducer } from '../../lib/redux/reducers/printingState'
 
 const Step1: React.FC = () => {
+  const dispatch = useDispatch()
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      dispatch(setFileReducer(e.target.files[0].name))
+    }
+  }
   const [isInDropzone, setIsInDropzone] = useState(true)
   return (
     <div className={`${styles.centerBox} ${'shadow-2xl'}`}>
@@ -25,7 +33,7 @@ const Step1: React.FC = () => {
         </div>
       </div>
 
-      {isInDropzone ? <Dropzone /> : <RecentFile />}
+      {isInDropzone ? <Dropzone handleFileChange={handleChange} /> : <RecentFile />}
     </div>
   )
 }

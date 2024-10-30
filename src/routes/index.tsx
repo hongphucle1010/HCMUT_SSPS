@@ -6,8 +6,8 @@ import LogIn from '../pages/LogInSSO/LogIn'
 import { useSelector } from 'react-redux'
 import { RootState } from '../lib/redux/store'
 import LogOut from '../components/LogOut/LogOut'
-import Step1 from '../pages/Print/StepOne'
-import Step2 from '../pages/Print/StepTwo'
+// import Step1 from '../pages/Print/StepOne'
+// import Step2 from '../pages/Print/StepTwo'
 import Map1 from '../pages/Print/Map1'
 import Map2 from '../pages/Print/Map2'
 import History from '../pages/History'
@@ -24,6 +24,7 @@ import ConfigurationPage from '../pages/ConfigurationPage/ConfigurationPage'
 import StudentInfoPage from '../pages/StudentInfoPage/StudentInfoPage'
 import TestingPage from '../pages/TestingPage/Test'
 import GuestLayout from '../layout/GuestLayout/GuestLayout'
+import PrintPage from '../pages/Print/PrintPage'
 
 const Router: React.FC = () => {
   const role = useSelector((state: RootState) => state.user.value.role)
@@ -61,27 +62,25 @@ const Router: React.FC = () => {
       path: '/print',
       element: (
         <MainLayout>
-          <span></span>
+          <PrintPage />
         </MainLayout>
-      ),
-      children: [
-        {
-          path: 'step1',
-          element: <Step1 />
-        },
-        {
-          path: 'step2',
-          element: <Step2 />
-        },
-        {
-          path: 'map1',
-          element: <Map1 />
-        },
-        {
-          path: 'map2',
-          element: <Map2 />
-        }
-      ]
+      )
+    },
+    {
+      path: '/print/map1',
+      element: (
+        <MainLayout>
+          <Map1 />
+        </MainLayout>
+      )
+    },
+    {
+      path: '/print/map2',
+      element: (
+        <MainLayout>
+          <Map2 />
+        </MainLayout>
+      )
     },
     {
       path: '/history',

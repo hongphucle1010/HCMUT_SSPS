@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Table } from 'flowbite-react'
 import SingleFileList from './singleFileList'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../lib/redux/store'
 
 interface FileInfo {
   fileName: string
@@ -28,6 +30,13 @@ const FakeRecentFileResult: FileInfo[] = [
 const RecentFile: React.FC = () => {
   const [recentFiles, setRecentFiles] = useState<FileInfo[]>([])
 
+  // Get history from redux
+  const history = useSelector((state: RootState) => state.printingState.value.history)
+
+  useEffect(() => {
+    console.log(history)
+  }, [history])
+
   useEffect(() => {
     setRecentFiles(FakeRecentFileResult)
   }, [recentFiles])
@@ -36,7 +45,6 @@ const RecentFile: React.FC = () => {
     <div
       style={{
         width: '100%',
-        height: '100%',
         margin: 'auto'
       }}
     >

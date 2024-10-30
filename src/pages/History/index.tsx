@@ -1,9 +1,11 @@
 import SearchBar from './searchbar'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import type { GetProp, TableProps } from 'antd'
 import { Table } from 'antd'
 import type { SorterResult } from 'antd/es/table/interface'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../lib/redux/store'
 
 type ColumnsType<T extends object = object> = TableProps<T>['columns']
 type TablePaginationConfig = Exclude<GetProp<TableProps, 'pagination'>, boolean>
@@ -100,6 +102,12 @@ const History: React.FC = () => {
       pageSize: 10
     }
   })
+
+  const history = useSelector((state: RootState) => state.printingState.value.history)
+
+  useEffect(() => {
+    console.log(history)
+  }, [history])
 
   const handleTableChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter) => {
     setTableParams({

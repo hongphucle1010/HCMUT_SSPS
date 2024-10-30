@@ -1,11 +1,15 @@
 import React from 'react'
 
-const Dropzone: React.FC = () => {
+interface DropzoneProps {
+  handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+}
+
+const Dropzone: React.FC<DropzoneProps> = ({ handleFileChange }) => {
   return (
     <div>
       <label
         htmlFor='dropzone-file'
-        className='flex flex-col items-center justify-center border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600'
+        className='flex flex-col items-center justify-center border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600'
         style={{
           margin: 'auto',
           marginTop: '10px',
@@ -34,7 +38,7 @@ const Dropzone: React.FC = () => {
           </p>
           <p className='text-xs text-gray-500 dark:text-gray-400'> SVG, PNG, JPG or GIF (MAX. 800x400px) </p>
         </div>
-        <input id='dropzone-file' type='file' className='hidden' />
+        <input id='dropzone-file' type='file' className='hidden' onChange={handleFileChange} />
       </label>
     </div>
   )
