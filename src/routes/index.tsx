@@ -25,7 +25,6 @@ import StudentInfoPage from '../pages/StudentInfoPage/StudentInfoPage'
 import TestingPage from '../pages/TestingPage/Test'
 import GuestLayout from '../layout/GuestLayout/GuestLayout'
 import PrintPage from '../pages/Print/PrintPage'
-import { element } from 'prop-types'
 
 const Router: React.FC = () => {
   const role = useSelector((state: RootState) => state.user.value.role)

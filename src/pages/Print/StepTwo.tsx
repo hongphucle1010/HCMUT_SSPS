@@ -6,17 +6,18 @@ import { TbCircleArrowRight } from 'react-icons/tb'
 import styles2 from './StepTwo.module.scss'
 import img_ltk from '../../assets/map1.png'
 import img_dan from '../../assets/map2.png'
+import { useDispatch } from 'react-redux'
+import { removeFileReducer } from '../../lib/redux/reducers/printingState'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../lib/redux/store'
 
-interface StepTwoProps {
-  file: File | null
-  setIsInStepOne: React.Dispatch<React.SetStateAction<boolean>>
-}
-
-const Step2: React.FC<StepTwoProps> = ({ file, setIsInStepOne }) => {
+const Step2: React.FC = () => {
   const [nPage, setNPage] = useState(0)
   const [color, setColor] = useState('none')
   const [printSz, setPrintSz] = useState('none')
   const [printLocation, setPrintLocation] = useState('none')
+  const dispatch = useDispatch()
+  const printingState = useSelector((state: RootState) => state.printingState.value)
 
   const handleChange = (e: React.FormEvent<HTMLSelectElement>) => {
     setColor(e.currentTarget.value)
@@ -37,7 +38,8 @@ const Step2: React.FC<StepTwoProps> = ({ file, setIsInStepOne }) => {
           <h1>Bước 2: Định dạng khổ giấy</h1>
         </div>
         <div className={`${styles2.theFile}`}>
-          <FaRegFilePdf size={24} /> DummyFile.pdf
+          <FaRegFilePdf size={24} />
+          <span>{printingState.file}</span>
         </div>
         <div className={`${styles2.formDiv}`}>
           <form className={`${styles2.theForm}`}>
@@ -156,7 +158,7 @@ const Step2: React.FC<StepTwoProps> = ({ file, setIsInStepOne }) => {
       <div className={`${styles2.btn_div}`}>
         <div
           className={`${styles2.btn} ${styles2.left_align_5} rounded-md cursor-pointer`}
-          onClick={() => setIsInStepOne(true)}
+          onClick={() => dispatch(removeFileReducer())}
         >
           <LuArrowLeftCircle />
           <span>Quay về</span>

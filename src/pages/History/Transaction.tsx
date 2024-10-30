@@ -4,8 +4,7 @@ import { Table } from 'flowbite-react'
 const Transaction: React.FC = () => {
   return (
     <div>
-      <Table>
-      </Table>
+      <Table></Table>
     </div>
   )
 }

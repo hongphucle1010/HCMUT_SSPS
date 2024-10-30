@@ -3,6 +3,12 @@ import { getStatusApi, logInApi, signUpApi, spsoLogInApi, spsoSignUpApi } from '
 import { logInReducer, logOutReducer } from '../../lib/redux/reducers/userState'
 import { AxiosError } from 'axios'
 import { HttpErrorResponse } from '../../lib/types/error'
+import {
+  deleteFileHistoryReducer,
+  getFileHistoryReducer,
+  removeFileReducer
+} from '../../lib/redux/reducers/printingState'
+import { getAllPrintingLogsApi } from '../../api/printer'
 
 export function setToken(token: string) {
   console.log('Set token: ', token)
@@ -23,6 +29,8 @@ export async function logIn(username: string, password: string, dispatch: Dispat
       role: 'STUDENT'
     })
   )
+  const printingLogs = await getAllPrintingLogsApi()
+  dispatch(getFileHistoryReducer(printingLogs.data))
 }
 
 export async function spsoLogIn(email: string, password: string, dispatch: Dispatch) {
@@ -39,7 +47,9 @@ export async function spsoLogIn(email: string, password: string, dispatch: Dispa
 
 export function logOut(dispatch: Dispatch) {
   localStorage.removeItem('token')
+  dispatch(removeFileReducer())
   dispatch(logOutReducer())
+  dispatch(deleteFileHistoryReducer())
 }
 export async function signUp(username: string, password: string, name: string) {
   try {

@@ -3,17 +3,14 @@ import styles from './StepOne.module.scss'
 import Dropzone from '../../components/Dropzone/Dropzone'
 import RecentFile from '../../components/RecentFile/recentfile'
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { setFileReducer } from '../../lib/redux/reducers/printingState'
 
-interface StepOneProps {
-  setFile: React.Dispatch<React.SetStateAction<File | null>>
-  setIsInStepOne: React.Dispatch<React.SetStateAction<boolean>>
-}
-
-const Step1: React.FC<StepOneProps> = ({ setFile, setIsInStepOne }) => {
+const Step1: React.FC = () => {
+  const dispatch = useDispatch()
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setFile(e.target.files[0])
-      setIsInStepOne(false)
+      dispatch(setFileReducer(e.target.files[0].name))
     }
   }
   const [isInDropzone, setIsInDropzone] = useState(true)
