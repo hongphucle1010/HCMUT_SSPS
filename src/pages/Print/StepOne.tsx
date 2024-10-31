@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './StepOne.module.scss'
 import Dropzone from '../../components/Dropzone/Dropzone'
-import RecentFile from '../../components/RecentFile/RecentFile'
+import RecentFile from '../../components/RecentFile/recentfile'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { setFileReducer } from '../../lib/redux/reducers/printingState'
