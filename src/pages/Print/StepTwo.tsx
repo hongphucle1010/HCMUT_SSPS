@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux'
 import { removeFileReducer } from '../../lib/redux/reducers/printingState'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../lib/redux/store'
-import { getAllPrintersApi } from '../../api/printer'
+import { getAllPrintersApi, printRequestApi } from '../../api/printer'
 import { Button, Modal } from 'flowbite-react'
 import { getStudentApi } from '../../api/user/student'
 
@@ -21,8 +21,8 @@ const Step2: React.FC = () => {
   const [printSz, setPrintSz] = useState('none')
   const [printLocation, setPrintLocation] = useState('none')
   const [dblSided, setDblSided] = useState('none')
-  // const [warning, setWarning] = useState(false)
-  // const [warningMsg, setWarningMsg] = useState('none')
+  const [warning, setWarning] = useState(false)
+  const [warningMsg, setWarningMsg] = useState('none')
   const dispatch = useDispatch()
   const printingState = useSelector((state: RootState) => state.printingState.value)
   const [currentBalance, setCurrentBalance] = useState(-100)
@@ -47,22 +47,50 @@ const Step2: React.FC = () => {
 
   const printNow = () => {
     setOpenModal(false)
-    console.log('Balance: ', currentBalance)
+    // console.log(studentID)
+    const printerID = document.querySelector('#printer')?.value
+    // console.log('Printer ID: ', printerID)
+    if (printerID === 'none') {
+      setWarning(true)
+      setWarningMsg('máy in')
+      return
+    }
     const pageSize = document.forms['step2']['pageSize'].value
     if (pageSize === 'none') {
-      console.log(pageSize)
+      setWarning(true)
+      setWarningMsg('kích cỡ in')
       return
     }
     let isDoubleSided = document.forms['step2']['isDoubleSided'].value
     if (isDoubleSided === 'none') {
-      console.log(isDoubleSided)
+      setWarning(true)
+      setWarningMsg('chế độ in')
       return
     } else {
       isDoubleSided = isDoubleSided === 'yes'
     }
-    const printerID = Number(document.forms['step2']['copies'].value)
-    console.log(studentID)
-    console.log(printerID)
+    const copies = Number(document.forms['step2']['copies'].value)
+    if (copies == 0) {
+      setWarning(true)
+      setWarningMsg('số bản in khác 0')
+      return
+    } else {
+      isDoubleSided = isDoubleSided === 'yes'
+    }
+    printRequestApi({
+      studentId: studentID,
+      printerId: printerID,
+      fileName: printingState.file,
+      pageSize: pageSize,
+      numPages: 10,
+      isDoubleSided: isDoubleSided,
+      copies: copies,
+      currentBalance: currentBalance
+    }).then((response) => {
+      console.log(response)
+    })
+    // console.log(copies)
+    // console.log('Balance: ', currentBalance)
   }
 
   const StepTwo = () => {
@@ -247,6 +275,21 @@ const Step2: React.FC = () => {
                 </Button>
                 <Button color='failure' onClick={() => setOpenModal(false)}>
                   {'Không, quay về'}
+                </Button>
+              </div>
+            </div>
+          </Modal.Body>
+        </Modal>
+        <Modal show={warning} size='md' onClose={() => setWarning(false)} popup>
+          <Modal.Header />
+          <Modal.Body>
+            <div className='text-center'>
+              <h3 className='mb-5 text-lg font-normal text-gray-500 dark:text-gray-400' id='warningMsg'>
+                Làm ơn hãy chọn {warningMsg}
+              </h3>
+              <div className='flex justify-center gap-4'>
+                <Button color='gray' onClick={() => setWarning(false)}>
+                  {'Quay về'}
                 </Button>
               </div>
             </div>
