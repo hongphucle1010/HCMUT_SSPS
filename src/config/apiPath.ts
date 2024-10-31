@@ -28,3 +28,6 @@ export const getTypesPath = '/filetype'
 // Student path
 export const studentPath = '/student'
 export const studentPagePath = '/student/page'
+export const getLogInTimesPath = '/getlogintimes'
+export const getLogInTimesTodayPath = '/getlogintimes/today'
+export const getLogInTimesYesterdayPath = '/getlogintimes/yesterday'
