@@ -54,8 +54,7 @@ const RecentFile: React.FC = () => {
             {FakeRecentFileResult.map((item) => (
               <SingleFileList
                 fileName={item.fileName}
-                fileSize={item.fileSize}
-                timeUpload={item.timeUpload.toString()}
+                updatedAt={item.timeUpload}
               />
             ))}
           </Table.Body>
