@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Table } from 'flowbite-react'
-import SingleFileList from './singleFileList'
+import SingleFileList from './SingleFileList'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../lib/redux/store'
 
@@ -34,7 +34,7 @@ const RecentFile: React.FC = () => {
   const history = useSelector((state: RootState) => state.printingState.value.history)
 
   useEffect(() => {
-    console.log(history)
+    console.log(history)  
   }, [history])
 
   useEffect(() => {
@@ -50,11 +50,19 @@ const RecentFile: React.FC = () => {
     >
       <div className='relative overflow-x-auto'>
         <Table>
-          <Table.Body className='divide-y'>
-            {FakeRecentFileResult.map((item) => (
+          {/* <Table.Head>
+            <Table.HeadCell className='w-1/12'>
+              Icon
+            </Table.HeadCell>
+            <Table.HeadCell>
+              Thoi gian
+            </Table.HeadCell>
+          </Table.Head> */}
+          <Table.Body className={`divide-y`}>
+            {history.map((item) => (
               <SingleFileList
                 fileName={item.fileName}
-                updatedAt={item.timeUpload}
+                updatedAt={item.updatedAt}
               />
             ))}
           </Table.Body>

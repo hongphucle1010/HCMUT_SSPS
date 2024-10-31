@@ -10,16 +10,17 @@ function getFileIcon(fileName: string ) {
   const extension = fileName.split('.').pop()
 
   if (extension === 'pdf') {
-    return <FaRegFilePdf />
+    return <FaRegFilePdf size={20}/>
   } else if (extension === 'docx') {
-    return <TbFileTypeDocx />
+    return <TbFileTypeDocx size={20}/>
   }
 }
 
 const SingleFileList: React.FC<{
   fileName: string
-  updatedAt: Date
+  updatedAt: string
 }> = ({ fileName, updatedAt }) => {
+  const UpdatedAt = new Date(updatedAt)
   const dispatch = useDispatch();
   
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -39,18 +40,32 @@ const SingleFileList: React.FC<{
 
   useEffect(
     () => {
-      console.log(typeof updatedAt)
-      const timeDiff = currentTime.getTime() - updatedAt.getTime();
+      console.log(typeof UpdatedAt)
+      const timeDiff = currentTime.getTime() - UpdatedAt.getTime();
       const seconds = Math.floor(timeDiff / 1000);
-      setTimeElapsed(`${seconds} seconds ago`)
+      const minutes = Math.floor(seconds / 60);
+      const hours   = Math.floor(minutes / 60);
+      const days    = Math.floor(hours / 24);
+      if (days > 0){
+        setTimeElapsed(`${days} days ago`);
+      }
+      else if (hours > 0){
+        setTimeElapsed(`${hours} hours ago`);
+      }
+      else if (minutes > 0){
+        setTimeElapsed(`${minutes} minutes ago`);
+      }
+      else{
+        setTimeElapsed(`${seconds} seconds ago`)
+      }
     }, [currentTime]
   );  
 
   return (
     <Table.Row className={`bg-white dark:border-gray-700 dark:bg-gray-800 cursor-pointer`} onClick={() => dispatch(setFileReducer(fileName))}>
-      <Table.Cell>{getFileIcon(fileName)}</Table.Cell>
+      <Table.Cell className={`w-1`}>{getFileIcon(fileName)}</Table.Cell>
       <Table.Cell className={`whitespace-nowrap font-medium text-gray-900 dark:text-white`}>
-        <p>{fileName}</p> <p>{currentTime.getTime()}</p>
+        <p style={{fontWeight: 'bold'}}>{fileName}</p> <p>{timeElapsed}</p>
       </Table.Cell>
     </Table.Row>
   )
