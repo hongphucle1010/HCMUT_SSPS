@@ -23,6 +23,20 @@ export async function logIn(username: string, password: string, dispatch: Dispat
       role: 'STUDENT'
     })
   )
+  const printingLogs = await getAllPrintingLogsApi()
+  dispatch(getFileHistoryReducer(printingLogs.data))
+}
+
+export async function spsoLogIn(email: string, password: string, dispatch: Dispatch) {
+  const response = await spsoLogInApi(email, password)
+  setToken(response.data.token)
+  dispatch(
+    logInReducer({
+      id: response.data.spso.id,
+      name: response.data.spso.name,
+      role: 'ADMIN'
+    })
+  )
 }
 
 export function logOut(dispatch: Dispatch) {
