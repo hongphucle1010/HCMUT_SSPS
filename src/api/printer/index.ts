@@ -43,8 +43,25 @@ export async function printRequestApi(request: PrintRequestParams) {
 
 export async function getAllPrintingLogsApi() {
   try {
-    const response = await apiClient.get<PrintingLog[]>(printingLogPath)
-    return response
+    const response = await apiClient.get<PrintingLogResponse[]>(printingLogPath)
+    const newResponse: PrintingLog[] = [];
+    response.data.forEach((log) => {
+      newResponse.push({
+        id: log.id,
+        createdAt: new Date(log.createdAt),
+        updatedAt: new Date(log.updatedAt),
+        studentId: log.studentId,
+        printerId: log.printerId,
+        fileName: log.fileName,
+        startTime: new Date(log.startTime),
+        endTime: log.endTime ? new Date(log.endTime) : null,
+        pageSize: log.pageSize,
+        numPages: log.numPages,
+        isDoubleSided: log.isDoubleSided,
+        copies: log.copies,
+      })
+    })
+    return newResponse
   } catch (error) {
     console.error(error)
     throw error
