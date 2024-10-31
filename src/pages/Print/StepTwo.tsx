@@ -144,10 +144,10 @@ const Step2: React.FC = () => {
                   <option value='none' disabled>
                     Chọn kích cỡ
                   </option>
-                  <option value='a2'>A2</option>
-                  <option value='a3'>A3</option>
-                  <option value='a4'>A4</option>
-                  <option value='a5'>A5</option>
+                  <option value='A2'>A2</option>
+                  <option value='A3'>A3</option>
+                  <option value='A4'>A4</option>
+                  <option value='A5'>A5</option>
                 </select>
                 <br />
               </label>
