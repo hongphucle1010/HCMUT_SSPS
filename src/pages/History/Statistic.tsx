@@ -11,6 +11,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend, ChartData, ChartOptions 
 import ChartDataLabels from 'chartjs-plugin-datalabels'
 import { getAllPrintersApi } from '../../api/printer'
 import chroma from 'chroma-js'
+
 interface StatisticCardProps {
   name: string
   quantity: number
@@ -155,7 +156,66 @@ const PieChart: React.FC = () => {
   )
 }
 
+const StatisticTable = () => {
+  const history = useSelector((state: RootState) => state.printingState.value.history)
+  console.log(history)
+  const total_print = history.length
+  const total_print_done = history.filter((record: PrintingLog) => record.endTime).length
+  const total_pages = history.reduce((total, record: PrintingLog) => total + record.numPages, 0)
+
+  return (
+    <div className='row-span-2 flex flex-1 items-center'>
+      <div className='mx-2'>
+        <div className='grid grid-cols-2 mt-2'>
+          <div className='bg-gray-200 p-1 mr-2'>Tổng số lần in</div>
+          <div className=' bg-black text-white p-1'>{total_print}</div>
+        </div>
+        <div className='grid grid-cols-2 mt-2'>
+          <div className='bg-gray-200 p-1 mr-2'>Số lần in hoàn thành</div>
+          <div className=' bg-black text-white p-1'>{total_print_done}</div>
+        </div>
+        <div className='grid grid-cols-2 mt-2'>
+          <div className='bg-gray-200 p-1 mr-2'>Tổng số trang in</div>
+          <div className=' bg-black text-white p-1'>{total_pages}</div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function getCurrentDate(): Date {
+  const currentDate = new Date()
+  return currentDate
+}
+
+function getYesterdayDate(): Date {
+  const yesterday = new Date()
+  yesterday.setDate(yesterday.getDate() - 1) // Subtract 1 day
+  return yesterday
+}
+
+function isSameDay(date1: Date, date2: Date): boolean {
+  const str_date1 = date1.toISOString()
+  const str_date2 = date2.toISOString()
+  return str_date1.slice(0, 10) === str_date2.slice(0, 10) // Compare only the date part
+}
+
 const Statistic: React.FC = () => {
+  const history = useSelector((state: RootState) => state.printingState.value.history) as PrintingLog[]
+  const currentDate = getCurrentDate()
+  const yesterday = getYesterdayDate()
+  let requestCurrentDate = 0
+  let requestYesterday = 0
+
+  for (let i = 0; i < history.length; i++) {
+    if (isSameDay(new Date(history[i].startTime), currentDate)) {
+      requestCurrentDate++
+    }
+    if (isSameDay(new Date(history[i].startTime), yesterday)) {
+      requestYesterday++
+    }
+  }
+
   return (
     <div
       className='grid grid-cols-6 overflow-x-scroll'
@@ -174,9 +234,15 @@ const Statistic: React.FC = () => {
             />
             <StatisticCard
               name='Lượt yêu cầu'
-              quantity={32}
-              pastQuantity={34}
-              icon={<FaArrowDown className='text-4xl' />}
+              quantity={requestCurrentDate}
+              pastQuantity={requestYesterday}
+              icon={
+                requestCurrentDate < requestYesterday ? (
+                  <FaArrowDown className='text-4xl' />
+                ) : (
+                  <FaArrowUp className='text-4xl' />
+                )
+              }
             />
             <StatisticCard
               name='Lượt in trong tháng'
@@ -190,26 +256,7 @@ const Statistic: React.FC = () => {
         <PrintingHistoryTable />
       </div>
       <div className='col-span-2 flex-1 grid grid-rows-5 max-w-fit'>
-        <div className='row-span-2 flex flex-1 items-center'>
-          <div className='mx-2'>
-            <div className='grid grid-cols-2 mt-2'>
-              <div className='bg-gray-200 p-1 mr-2'>Tổng số lần in</div>
-              <div className=' bg-black text-white p-1'>30</div>
-            </div>
-            <div className='grid grid-cols-2 mt-2'>
-              <div className='bg-gray-200 p-1 mr-2'>Số lần in hoàn thành</div>
-              <div className=' bg-black text-white p-1'>30</div>
-            </div>
-            <div className='grid grid-cols-2 mt-2'>
-              <div className='bg-gray-200 p-1 mr-2'>Tổng số trang in</div>
-              <div className=' bg-black text-white p-1'>30</div>
-            </div>
-            <div className='grid grid-cols-2 mt-2'>
-              <div className='bg-gray-200 p-1 mr-2'>Tổng số tiền đã thanh toán</div>
-              <div className=' bg-black text-white p-1'>50000</div>
-            </div>
-          </div>
-        </div>
+        <StatisticTable />
 
         <div className='row-span-3'>
           <p className='font-bold'>Các máy in</p>
