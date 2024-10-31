@@ -22,15 +22,15 @@ const NavBarElement: React.FC<NavBarElementProps> = (props) => {
 const HistoryLayout: React.FC<LayoutProps> = ({ children }) => {
   const navigate = useNavigate()
   return (
-    <div className={`min-h-screen`}>
+    <div className='min-h-screen'>
       <Header />
-      <div className='flex'>
-        <div className='flex-none w-64 min-h-screen border-r-4 border-black fixed'>
+      <div className=''>
+        <div className='w-64 h-full border-r-4 border-black fixed'>
           <NavBarElement text='Lịch sử trang in' icon={<FaRegClipboard />} onClick={() => navigate('/history')} />
           <NavBarElement text='Thống kê' icon={<IoStatsChart />} onClick={() => navigate('/history/statistic')} />
         </div>
 
-        <div className='flex-1 ml-64'>
+        <div className='ml-64'>
           {children}
           <Outlet />
         </div>
