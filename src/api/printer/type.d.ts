@@ -36,6 +36,21 @@ interface PrintingLog {
   copies: number
 }
 
+interface PrintingLogResponse {
+  id: string
+  createdAt: string
+  updatedAt: string
+  studentId: string
+  printerId: string
+  fileName: string
+  startTime: string
+  endTime: string | null
+  pageSize: string
+  numPages: number
+  isDoubleSided: boolean
+  copies: number
+}
+
 interface PrintRequestParams {
   studentId: string
   printerId: string

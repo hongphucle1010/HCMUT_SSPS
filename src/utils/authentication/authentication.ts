@@ -30,7 +30,7 @@ export async function logIn(username: string, password: string, dispatch: Dispat
     })
   )
   const printingLogs = await getAllPrintingLogsApi()
-  dispatch(getFileHistoryReducer(printingLogs.data))
+  dispatch(getFileHistoryReducer(printingLogs))
 }
 
 export async function spsoLogIn(email: string, password: string, dispatch: Dispatch) {
