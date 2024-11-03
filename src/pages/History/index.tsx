@@ -1,113 +1,186 @@
-import SearchBar from './searchbar'
-
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, ChangeEvent } from 'react'
 import type { GetProp, TableProps } from 'antd'
-import { Table } from 'antd'
+import { Table, Input } from 'antd'
 import type { SorterResult } from 'antd/es/table/interface'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../lib/redux/store'
+import { getAllPrintersApi } from '../../api/printer'
 
 type ColumnsType<T extends object = object> = TableProps<T>['columns']
 type TablePaginationConfig = Exclude<GetProp<TableProps, 'pagination'>, boolean>
 
 interface DataType {
-  col1: number
-  col2: string
-  col3: string
-  col4: string
-  col5: string
-  col6: number
-  col7: string
-  login: {
-    uuid: string
-  }
+  id: number
+  printerId: string
+  startTime: Date
+  endTime: Date | null
+  pageSize: string
+  numPages: number
+  fileName: string
+  status: 'Hoàn thành' | 'Đang in'
+  // login: {
+  //   uuid: string
+  // }
 }
 
-interface TableParams {
-  pagination?: TablePaginationConfig
-  sortField?: SorterResult<any>['field']
-  sortOrder?: SorterResult<any>['order']
-  filters?: Parameters<GetProp<TableProps, 'onChange'>>[1]
+interface PrintingLog {
+  id: string
+  createdAt: Date
+  updatedAt: Date
+  studentId: string
+  printerId: string
+  fileName: string
+  startTime: Date
+  endTime: Date | null
+  pageSize: string
+  numPages: number
+  isDoubleSided: boolean
+  copies: number
 }
-
-const columns: ColumnsType<DataType> = [
-  {
-    title: 'Lần in',
-    dataIndex: 'col1',
-    sorter: true,
-    width: '10%'
-  },
-  {
-    title: 'Máy in',
-    dataIndex: 'col2',
-    filters: [
-      { text: '114H4', value: '114H6' },
-      { text: '504H3', value: '504H3' },
-      { text: '315B3', value: '315B3' }
-    ],
-    width: '10%'
-  },
-  {
-    title: 'Thời gian bắt đầu',
-    dataIndex: 'col3',
-    sorter: true,
-    width: '23%'
-  },
-  {
-    title: 'Thời gian kết thúc',
-    dataIndex: 'col4',
-    sorter: true,
-    width: '23%'
-  },
-  {
-    title: 'Kích thước trang',
-    dataIndex: 'col5',
-    filters: [
-      { text: 'A0', value: 'A0' },
-      { text: 'A4', value: 'A4' },
-      { text: 'A5', value: 'A5' }
-    ],
-    width: '10%'
-  },
-  {
-    title: 'Số trang',
-    dataIndex: 'col6',
-    sorter: true,
-    width: '10%'
-  },
-  {
-    title: 'Trạng thái',
-    dataIndex: 'col7',
-    filters: [
-      { text: 'Hoàn thành', value: 'Hoàn thành' },
-      { text: 'Đang in', value: 'Đang in' },
-      { text: 'Không hoàn thành', value: 'Không hoàn thành' }
-    ],
-    width: '14%'
-  }
-]
 
 // const getRandomuserParams = (params: TableParams) => ({
 //   results: params.pagination?.pageSize,
 //   page: params.pagination?.current,
 //   ...params
-// })
+// }
+
+const getPrinterById = (printerId: string, printerList: PrinterWithLocation[]): string => {
+  const found = printerList.find((item) => item.id === printerId)
+  return found ? found.location.campusName + ' - ' + found.location.buildingName : 'Unknown'
+}
 
 const History: React.FC = () => {
-  const [data, setData] = useState<DataType[]>()
-  // const [loading, setLoading] = useState(false)
+  const [printerList, setPrinterList] = useState<PrinterWithLocation[]>([])
+
+  const columns: ColumnsType<DataType> = [
+    {
+      title: 'Lần in',
+      dataIndex: 'id',
+      width: '10%',
+      sorter: (a, b) => a.id - b.id
+      // filteredValue: [searchedText],
+      // onFilter: (searchedText, record) => {
+      //   return (
+      //     String(record.id).toLowerCase().includes(String(searchedText).toLowerCase()) ||
+      //     String(record.fileName).toLowerCase().includes(String(searchedText).toLowerCase()) ||
+      //     String(record.pageSize).toLowerCase().includes(String(searchedText).toLowerCase()) ||
+      //     String(record.status).toLowerCase().includes(String(searchedText).toLowerCase()) ||
+      //     String(record.numPages).toLowerCase().includes(String(searchedText).toLowerCase()) ||
+      //     String(record.printerId).toLowerCase().includes(String(searchedText).toLowerCase()) ||
+      //     String(record.startTime).toLowerCase().includes(String(searchedText).toLowerCase()) ||
+      //     String(record.endTime).toLowerCase().includes(String(searchedText).toLowerCase())
+      //   )
+      // }
+    },
+    {
+      title: 'Máy in',
+      dataIndex: 'printerId',
+      filters: [
+        { text: 'DiAn - BK.B6', value: 'DiAn - BK.B6' },
+        { text: 'DiAn - BK.B2', value: 'DiAn - BK.B2' },
+        { text: 'LTK - C6', value: 'LTK - C6' }
+      ],
+      onFilter: (value, record) => record.printerId.startsWith(value as string),
+      width: '10%'
+    },
+    {
+      title: 'Tên file',
+      dataIndex: 'fileName'
+    },
+    {
+      title: 'Thời gian bắt đầu',
+      dataIndex: 'startTime',
+      width: '23%',
+      sorter: (a, b) => a.startTime.valueOf() - b.startTime.valueOf()
+    },
+    {
+      title: 'Thời gian kết thúc',
+      dataIndex: 'endTime',
+      width: '23%',
+      sorter: (a, b) => a.startTime.valueOf() - b.startTime.valueOf()
+    },
+    {
+      title: 'Kích thước trang',
+      dataIndex: 'pageSize',
+      filters: [
+        { text: 'A0', value: 'A0' },
+        { text: 'A1', value: 'A1' },
+        { text: 'A2', value: 'A2' },
+        { text: 'A3', value: 'A3' },
+        { text: 'A4', value: 'A4' },
+        { text: 'A5', value: 'A5' }
+      ],
+      onFilter: (value, record) => record.pageSize.startsWith(value as string),
+      width: '10%'
+    },
+    {
+      title: 'Số trang',
+      dataIndex: 'numPages',
+      width: '10%',
+      sorter: (a, b) => a.numPages - b.numPages
+    },
+    {
+      title: 'Trạng thái',
+      dataIndex: 'status',
+      filters: [
+        { text: 'Hoàn thành', value: 'Hoàn thành' },
+        { text: 'Đang in', value: 'Đang in' }
+      ],
+      width: '14%',
+      onFilter: (value, record) => record.status.startsWith(value as string)
+    }
+  ]
+
+  interface TableParams {
+    pagination?: TablePaginationConfig
+    sortField?: SorterResult<any>['field']
+    sortOrder?: SorterResult<any>['order']
+    filters?: Parameters<GetProp<TableProps, 'onChange'>>[1]
+  }
+
+  const [data, setData] = useState<DataType[]>([])
+  const [initialData, setInitialData] = useState<DataType[]>([])
+  const [loading, setLoading] = useState(true)
   const [tableParams, setTableParams] = useState<TableParams>({
     pagination: {
       current: 1,
-      pageSize: 10
+      pageSize: 5
     }
   })
 
   const history = useSelector((state: RootState) => state.printingState.value.history)
 
   useEffect(() => {
-    console.log(history)
-  }, [history])
+    getAllPrintersApi().then((res) => {
+      setPrinterList(res.data)
+    })
+  }, [])
+
+  useEffect(() => {
+    let uniqueId = 0
+    const tmp: DataType[] = history.flatMap((item: PrintingLog) =>
+      Array.from({ length: 100 }, (_, replicated_Index) => {
+        uniqueId++
+        const printerData = getPrinterById(item.printerId, printerList)
+        return {
+          id: uniqueId,
+          fileName: item.fileName,
+          // isDoubleSided: item.isDoubleSided,
+          // studentId: item.studentId,
+          // copies: item.copies,
+          printerId: printerData,
+          startTime: item.startTime,
+          endTime: item.endTime,
+          pageSize: item.pageSize,
+          numPages: item.numPages,
+          status: item.endTime ? 'Hoàn thành' : 'Đang in'
+        }
+      })
+    )
+    setInitialData(tmp)
+    setData(tmp)
+    setLoading(false)
+  }, [history, printerList])
 
   const handleTableChange: TableProps<DataType>['onChange'] = (pagination, filters, sorter) => {
     setTableParams({
@@ -119,20 +192,49 @@ const History: React.FC = () => {
 
     // `dataSource` is useless since `pageSize` changed
     if (pagination.pageSize !== tableParams.pagination?.pageSize) {
-      setData([])
+      setData(data)
     }
+  }
+
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target
+    if (!value) {
+      setData(initialData)
+      return
+    }
+
+    const filteredData = data.filter((item) => {
+      return (
+        item.id.toString().toLowerCase().includes(value.toLowerCase()) ||
+        item.fileName.toString().toLowerCase().includes(value.toLowerCase()) ||
+        item.printerId.toString().toLowerCase().includes(value.toLowerCase()) ||
+        item.status.toString().toLowerCase().includes(value.toLowerCase()) ||
+        item.pageSize.toString().toLowerCase().includes(value.toLowerCase()) ||
+        item.numPages.toString().toLowerCase().includes(value.toLowerCase())
+      )
+    })
+    setData(filteredData)
   }
 
   return (
     <div>
-      <SearchBar />
+      <Input.Search
+        size='large'
+        placeholder='Search'
+        allowClear
+        style={{ marginBottom: '8px' }}
+        onChange={handleSearch}
+      />
+      {/* <Button onClick={clearAll}>Clear all</Button> */}
       <Table<DataType>
         columns={columns}
-        rowKey={(record) => record.login.uuid}
+        rowKey={(record) => record.id}
         dataSource={data}
         pagination={tableParams.pagination}
+        // pagination={{ defaultPageSize: 10, showSizeChanger: true, pageSizeOptions: ['5', '10', '20', '50'] }}
         // loading={loading}
         onChange={handleTableChange}
+        loading={loading}
       />
     </div>
   )
