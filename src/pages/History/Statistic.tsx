@@ -5,13 +5,26 @@ import { Table } from 'flowbite-react'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../lib/redux/store'
 import { useEffect } from 'react'
-
+import { Bar } from 'react-chartjs-2'
 import { Pie } from 'react-chartjs-2'
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, ChartData, ChartOptions } from 'chart.js'
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+  ChartData,
+  ChartOptions,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title
+} from 'chart.js'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
 import { getAllPrintersApi } from '../../api/printer'
 import chroma from 'chroma-js'
 import { getLogInTimesApi, getLogInTimesTodayApi, getLogInTimesYesterdayApi } from '../../api/user/student'
+
+ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels, CategoryScale, LinearScale, BarElement, Title)
 
 interface StatisticCardProps {
   name: string
@@ -54,7 +67,7 @@ const PrintingHistoryTable = () => {
 
   return (
     <div className='flex-1'>
-      <p className='font-bold text-3xl pb-4'>Lượt yêu cầu gần đây</p>
+      <p className='font-bold text-3xl pb-4 px-3'>Lượt yêu cầu gần đây</p>
       <div className='overflow-x-auto'>
         <Table>
           <Table.Head>
@@ -87,8 +100,6 @@ function generateRandomColorsArray(length: number): string[] {
   const colorsArray: string[] = Array.from({ length }, () => chroma.random().hex())
   return colorsArray
 }
-
-ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels)
 
 const PieChart: React.FC = () => {
   const history = useSelector((state: RootState) => state.printingState.value.history)
@@ -154,6 +165,57 @@ const PieChart: React.FC = () => {
   )
 }
 
+type Props = {
+  visitsData: { month: string; visits: number }[]
+}
+
+const MonthlyVisitsChart: React.FC<Props> = ({ visitsData }) => {
+  const labels = visitsData.map((item) => item.month) // Các tháng
+  const dataValues = visitsData.map((item) => item.visits) // Số lần truy cập
+
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: 'Số lần truy cập',
+        data: dataValues,
+        backgroundColor: 'rgba(75, 192, 192, 0.5)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1
+      }
+    ]
+  }
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top' as const
+      },
+      title: {
+        display: true,
+        text: 'Tần suất truy cập theo tháng'
+      }
+    },
+    scales: {
+      x: {
+        title: {
+          display: false,
+          text: 'Tháng'
+        }
+      },
+      y: {
+        title: {
+          display: true,
+          text: 'Số lần truy cập'
+        }
+      }
+    }
+  }
+
+  return <Bar data={data} options={options} />
+}
+
 const StatisticTable = () => {
   const history = useSelector((state: RootState) => state.printingState.value.history)
   const total_print = history.length
@@ -215,6 +277,33 @@ function getPastMonthDate(): Date {
   return currentDate // This will return the first day of the previous month
 }
 
+type VisitLog = {
+  id: string
+  studentId: string
+  logInTime: string
+}
+
+type ProcessedData = {
+  month: string
+  visits: number
+}
+
+const processVisitDataByMonth = (visitLogs: VisitLog[]): ProcessedData[] => {
+  const monthlyVisits: Record<string, number> = {}
+
+  visitLogs.forEach((log) => {
+    const month = new Date(log.logInTime).toISOString().slice(0, 7) // "YYYY-MM"
+    if (!monthlyVisits[month]) {
+      monthlyVisits[month] = 0
+    }
+    monthlyVisits[month]++
+  })
+
+  return Object.entries(monthlyVisits)
+    .sort(([monthA], [monthB]) => new Date(monthA).getTime() - new Date(monthB).getTime())
+    .map(([month, visits]) => ({ month, visits }))
+}
+
 const Statistic: React.FC = () => {
   const history = useSelector((state: RootState) => state.printingState.value.history) as PrintingLog[]
   const currentDate = getCurrentDate()
@@ -240,7 +329,7 @@ const Statistic: React.FC = () => {
     (record: PrintingLog) => record.endTime && isSameMonth(pastMonthDate, new Date(record.startTime))
   ).length
 
-  const [logInTimes, setLogInTimes] = useState<number>(0)
+  const [logInTimes, setLogInTimes] = useState<VisitLog[]>([])
   const [logInTimesToday, setLogInTimesToday] = useState<number>(0)
   const [logInTimesYesterday, setLogInTimesYesterday] = useState<number>(0)
 
@@ -256,7 +345,12 @@ const Statistic: React.FC = () => {
     })
   }, [])
 
-  console.log(logInTimes, logInTimesToday, logInTimesYesterday)
+  console.log(logInTimesToday, logInTimesYesterday)
+
+  // console.log(logInTimes)
+  const visitByMonths = processVisitDataByMonth(logInTimes)
+  console.log(visitByMonths)
+
   return (
     <div
       className='grid grid-cols-6 overflow-x-scroll'
@@ -307,11 +401,13 @@ const Statistic: React.FC = () => {
               }
             />
           </div>
-          <div className='flex-1'>Biểu đồ cột</div>
+          <div className='flex-1 flex items-center overflow-auto'>
+            <MonthlyVisitsChart visitsData={visitByMonths} />
+          </div>
         </div>
         <PrintingHistoryTable />
       </div>
-      <div className='col-span-2 flex-1 grid grid-rows-5 max-w-fit'>
+      <div className='col-span-2 flex-1 grid grid-rows-5 max-w-fit pl-20'>
         <StatisticTable />
 
         <div className='row-span-3'>
