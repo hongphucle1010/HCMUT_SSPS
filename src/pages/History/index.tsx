@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState, ChangeEvent } from 'react'
 import type { GetProp, TableProps } from 'antd'
 import { Table, Input } from 'antd'
@@ -159,7 +160,7 @@ const History: React.FC = () => {
   useEffect(() => {
     let uniqueId = 0
     const tmp: DataType[] = history.flatMap((item: PrintingLog) =>
-      Array.from({ length: 100 }, (_, replicated_Index) => {
+      Array.from({ length: 100 }, () => {
         uniqueId++
         const printerData = getPrinterById(item.printerId, printerList)
         return {

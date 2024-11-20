@@ -3,7 +3,6 @@ import SingleFileList from './singleFileList'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../lib/redux/store'
 
-
 const RecentFile: React.FC = () => {
   // Get history from redux
   const history = useSelector((state: RootState) => state.printingState.value.history)
@@ -19,10 +18,7 @@ const RecentFile: React.FC = () => {
         <Table>
           <Table.Body className={`divide-y`}>
             {history.map((item) => (
-              <SingleFileList
-                fileName={item.fileName}
-                updatedAt={item.updatedAt}
-              />
+              <SingleFileList fileName={item.fileName} updatedAt={item.updatedAt} />
             ))}
           </Table.Body>
         </Table>
