@@ -1,4 +1,4 @@
-const host = 'http://20.6.92.205:3000'
+const host = window.location.hostname === 'hcmutssps.vercel.app' ? '' : 'http://20.6.92.205:3000'
 
 // const host = 'https://hcmutssps.azurewebsites.net'
 // This is the backup server.
