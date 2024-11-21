@@ -78,7 +78,6 @@ const Form: React.FC = () => {
           type='password'
           required
           onChange={(event: React.FormEvent<HTMLInputElement>) => {
-            console.log(event.currentTarget.value)
             setPassword(event.currentTarget.value)
           }}
         />

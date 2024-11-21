@@ -14,7 +14,7 @@ const printing = createSlice({
     value: {
       file: '',
       isInStepOne: true,
-      history: []
+      history: [] as PrintingLog[]
     }
   },
   reducers: {

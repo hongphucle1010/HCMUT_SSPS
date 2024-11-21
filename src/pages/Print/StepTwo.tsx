@@ -17,7 +17,6 @@ import { getStudentApi } from '../../api/user/student'
 const Step2: React.FC = () => {
   const [openModal, setOpenModal] = useState(false)
   const [nPage, setNPage] = useState(0)
-  // const [color, setColor] = useState('none')
   const [printSz, setPrintSz] = useState('none')
   const [printLocation, setPrintLocation] = useState('none')
   const [dblSided, setDblSided] = useState('none')
@@ -25,11 +24,7 @@ const Step2: React.FC = () => {
   const [warningMsg, setWarningMsg] = useState('none')
   const dispatch = useDispatch()
   const printingState = useSelector((state: RootState) => state.printingState.value)
-  const [currentBalance, setCurrentBalance] = useState(-100)
-
-  // const handleChange = (e: React.FormEvent<HTMLSelectElement>) => {
-  //   setColor(e.currentTarget.value)
-  // }
+  const [currentBalance, setCurrentBalance] = useState(0)
 
   const handleChange1 = (e: React.FormEvent<HTMLSelectElement>) => {
     setPrintSz(e.currentTarget.value)
@@ -47,35 +42,31 @@ const Step2: React.FC = () => {
 
   const printNow = () => {
     setOpenModal(false)
-    // console.log(studentID)
-    const printerID = document.querySelector('#printer')?.value
-    // console.log('Printer ID: ', printerID)
+    const printerID = printLocation
     if (printerID === 'none') {
       setWarning(true)
       setWarningMsg('máy in')
       return
     }
-    const pageSize = document.forms['step2']['pageSize'].value
+    const pageSize = printSz
     if (pageSize === 'none') {
       setWarning(true)
       setWarningMsg('kích cỡ in')
       return
     }
-    let isDoubleSided = document.forms['step2']['isDoubleSided'].value
-    if (isDoubleSided === 'none') {
+    let isDoubleSided = false
+    if (dblSided === 'none') {
       setWarning(true)
       setWarningMsg('chế độ in')
       return
     } else {
-      isDoubleSided = isDoubleSided === 'yes'
+      isDoubleSided = dblSided === 'yes'
     }
-    const copies = Number(document.forms['step2']['copies'].value)
+    const copies = nPage
     if (copies == 0) {
       setWarning(true)
       setWarningMsg('số bản in khác 0')
       return
-    } else {
-      isDoubleSided = isDoubleSided === 'yes'
     }
     printRequestApi({
       studentId: studentID,
@@ -87,10 +78,10 @@ const Step2: React.FC = () => {
       copies: copies,
       currentBalance: currentBalance
     }).then((response) => {
-      console.log(response)
+      if (response.status === 201) {
+        dispatch(removeFileReducer())
+      }
     })
-    // console.log(copies)
-    // console.log('Balance: ', currentBalance)
   }
 
   const StepTwo = () => {
@@ -122,20 +113,6 @@ const Step2: React.FC = () => {
                 <span className={`${styles2.reminder}`}>Số bản phải ít hơn 50</span>
               </label>
             </div>
-            {/* <div>
-              <label>
-                <span className={`${styles2.lbl}`}>Màu sắc</span>
-                <br />
-                <select value={color} onChange={handleChange} className={`${styles2.barwidth}`}>
-                  <option value='none' disabled>
-                    Chọn màu in
-                  </option>
-                  <option value='grayscale'>Trắng đen</option>
-                  <option value='colorful'>In màu</option>
-                </select>
-                <br />
-              </label>
-            </div> */}
             <div>
               <label>
                 <span className={`${styles2.lbl}`}>Kích cỡ</span>
@@ -144,10 +121,8 @@ const Step2: React.FC = () => {
                   <option value='none' disabled>
                     Chọn kích cỡ
                   </option>
-                  <option value='A2'>A2</option>
                   <option value='A3'>A3</option>
                   <option value='A4'>A4</option>
-                  <option value='A5'>A5</option>
                 </select>
                 <br />
               </label>
@@ -200,10 +175,6 @@ const Step2: React.FC = () => {
                 <option value='none' disabled>
                   Chọn vị trí
                 </option>
-                {/* <option value='ltka4'>LTK - A4.401</option>
-                <option value='ltkc6'>LTK - C6.601</option>
-                <option value='danh6'>Dĩ An - BK.B6</option>
-                <option value='danh2'>Dĩ An - BK.B2</option> */}
                 {printerList.map((printer) => (
                   <option value={printer.id}>
                     {(printer.location.campusName === 'DiAn' ? 'Dĩ An' : 'LTK') + ' - ' + printer.location.buildingName}

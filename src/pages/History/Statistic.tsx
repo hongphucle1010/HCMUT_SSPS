@@ -345,11 +345,7 @@ const Statistic: React.FC = () => {
     })
   }, [])
 
-  console.log(logInTimesToday, logInTimesYesterday)
-
-  // console.log(logInTimes)
   const visitByMonths = processVisitDataByMonth(logInTimes)
-  console.log(visitByMonths)
 
   return (
     <div

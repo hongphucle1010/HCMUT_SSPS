@@ -1,5 +1,8 @@
-const host = 'https://hcmutssps.azurewebsites.net'
-// const host = 'http://localhost:3000'
+const host = 'http://20.6.92.205:3000'
+
+// const host = 'https://hcmutssps.azurewebsites.net'
+// This is the backup server.
+// Because the 20.6.92.205 is my VM, it costs money, so in the future, I would turn it off.
 
 export const apiHost = `${host}/api/v1`
 

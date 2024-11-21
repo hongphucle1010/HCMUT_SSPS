@@ -13,7 +13,6 @@ export async function getConfigurationsApi() {
 
 export async function updateConfigurationsApi(configurations: ConfigUpdateParams) {
   try {
-    console.log(configurations)
     const response = await apiClient.put<Configurations>(configurationPath, configurations)
     return response
   } catch (error) {
