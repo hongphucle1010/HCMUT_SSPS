@@ -38,7 +38,6 @@ const SingleFileList: React.FC<{
   }, [currentTime])
 
   useEffect(() => {
-    console.log(typeof UpdatedAt)
     const timeDiff = currentTime.getTime() - UpdatedAt.getTime()
     const seconds = Math.floor(timeDiff / 1000)
     const minutes = Math.floor(seconds / 60)

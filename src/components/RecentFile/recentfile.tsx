@@ -18,7 +18,7 @@ const RecentFile: React.FC = () => {
         <Table>
           <Table.Body className={`divide-y`}>
             {history.map((item) => (
-              <SingleFileList fileName={item.fileName} updatedAt={item.updatedAt} />
+              <SingleFileList fileName={item.fileName} updatedAt={item.updatedAt as unknown as string} />
             ))}
           </Table.Body>
         </Table>

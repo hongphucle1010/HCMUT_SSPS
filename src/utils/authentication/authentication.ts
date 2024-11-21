@@ -11,7 +11,6 @@ import {
 import { getAllPrintingLogsApi } from '../../api/printer'
 
 export function setToken(token: string) {
-  console.log('Set token: ', token)
   localStorage.setItem('token', token)
 }
 
