@@ -48,3 +48,14 @@ npm run dev
 npm run build
 ```
 Mặc định file được build sẽ được tạo trong thư mục `dist`
+
+# Document
+Trong thư mục `document` chứa các tài liệu liên quan đến project.
+
+Các tài liệu bao gồm:
+- [Đặc tả yêu cầu phần mềm](https://github.com/hongphucle1010/HCMUT_SSPS/blob/main/Documents/SRS_TN01-03.pdf)
+- [Lược đồ use case](https://github.com/hongphucle1010/HCMUT_SSPS/tree/main/Documents/Diagrams/Use%20case)
+- [Sơ đồ hoạt động](https://github.com/hongphucle1010/HCMUT_SSPS/tree/main/Documents/Diagrams/System%20modelling/Activity%20diagrams)
+- [Lược đồ tuần tự](https://github.com/hongphucle1010/HCMUT_SSPS/tree/main/Documents/Diagrams/System%20modelling/Sequence%20diagrams)
+- [Sơ đồ lớp](https://github.com/hongphucle1010/HCMUT_SSPS/tree/main/Documents/Diagrams/System%20modelling/Class%20diagrams)
+- [Thiết kế kiến trúc](https://github.com/hongphucle1010/HCMUT_SSPS/tree/main/Documents/Diagrams/Architecture%20Design)
