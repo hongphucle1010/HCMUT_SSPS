@@ -39,12 +39,6 @@ interface PrintingLog {
   copies: number
 }
 
-// const getRandomuserParams = (params: TableParams) => ({
-//   results: params.pagination?.pageSize,
-//   page: params.pagination?.current,
-//   ...params
-// }
-
 const getPrinterById = (printerId: string, printerList: PrinterWithLocation[]): string => {
   const found = printerList.find((item) => item.id === printerId)
   return found ? found.location.campusName + ' - ' + found.location.buildingName : 'Unknown'
@@ -59,19 +53,6 @@ const History: React.FC = () => {
       dataIndex: 'id',
       width: '10%',
       sorter: (a, b) => a.id - b.id
-      // filteredValue: [searchedText],
-      // onFilter: (searchedText, record) => {
-      //   return (
-      //     String(record.id).toLowerCase().includes(String(searchedText).toLowerCase()) ||
-      //     String(record.fileName).toLowerCase().includes(String(searchedText).toLowerCase()) ||
-      //     String(record.pageSize).toLowerCase().includes(String(searchedText).toLowerCase()) ||
-      //     String(record.status).toLowerCase().includes(String(searchedText).toLowerCase()) ||
-      //     String(record.numPages).toLowerCase().includes(String(searchedText).toLowerCase()) ||
-      //     String(record.printerId).toLowerCase().includes(String(searchedText).toLowerCase()) ||
-      //     String(record.startTime).toLowerCase().includes(String(searchedText).toLowerCase()) ||
-      //     String(record.endTime).toLowerCase().includes(String(searchedText).toLowerCase())
-      //   )
-      // }
     },
     {
       title: 'Máy in',
@@ -92,13 +73,15 @@ const History: React.FC = () => {
       title: 'Thời gian bắt đầu',
       dataIndex: 'startTime',
       width: '23%',
-      sorter: (a, b) => a.startTime.valueOf() - b.startTime.valueOf()
+      sorter: (a, b) => a.startTime.valueOf() - b.startTime.valueOf(),
+      render: (value: Date) => new Date(value).toLocaleString()
     },
     {
       title: 'Thời gian kết thúc',
       dataIndex: 'endTime',
       width: '23%',
-      sorter: (a, b) => a.startTime.valueOf() - b.startTime.valueOf()
+      sorter: (a, b) => (a.endTime ? a.endTime.valueOf() - (b.endTime?.valueOf() || 0) : -1),
+      render: (value: Date | null) => (value ? new Date(value).toLocaleString() : '-')
     },
     {
       title: 'Kích thước trang',
@@ -159,25 +142,20 @@ const History: React.FC = () => {
 
   useEffect(() => {
     let uniqueId = 0
-    const tmp: DataType[] = history.flatMap((item: PrintingLog) =>
-      Array.from({ length: 100 }, () => {
-        uniqueId++
-        const printerData = getPrinterById(item.printerId, printerList)
-        return {
-          id: uniqueId,
-          fileName: item.fileName,
-          // isDoubleSided: item.isDoubleSided,
-          // studentId: item.studentId,
-          // copies: item.copies,
-          printerId: printerData,
-          startTime: item.startTime,
-          endTime: item.endTime,
-          pageSize: item.pageSize,
-          numPages: item.numPages,
-          status: item.endTime ? 'Hoàn thành' : 'Đang in'
-        }
-      })
-    )
+    const tmp: DataType[] = history.map((item: PrintingLog) => {
+      uniqueId++
+      const printerData = getPrinterById(item.printerId, printerList)
+      return {
+        id: uniqueId,
+        fileName: item.fileName,
+        printerId: printerData,
+        startTime: item.startTime,
+        endTime: item.endTime,
+        pageSize: item.pageSize,
+        numPages: item.numPages,
+        status: item.endTime ? 'Hoàn thành' : 'Đang in'
+      }
+    })
     setInitialData(tmp)
     setData(tmp)
     setLoading(false)
@@ -201,10 +179,17 @@ const History: React.FC = () => {
     const { value } = e.target
     if (!value) {
       setData(initialData)
+      setTableParams({
+        ...tableParams,
+        pagination: {
+          ...tableParams.pagination,
+          current: 1
+        }
+      })
       return
     }
 
-    const filteredData = data.filter((item) => {
+    const filteredData = initialData.filter((item) => {
       return (
         item.id.toString().toLowerCase().includes(value.toLowerCase()) ||
         item.fileName.toString().toLowerCase().includes(value.toLowerCase()) ||
@@ -215,6 +200,13 @@ const History: React.FC = () => {
       )
     })
     setData(filteredData)
+    setTableParams({
+      ...tableParams,
+      pagination: {
+        ...tableParams.pagination,
+        current: 1
+      }
+    })
   }
 
   return (

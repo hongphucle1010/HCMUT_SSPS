@@ -25,6 +25,7 @@ import StudentInfoPage from '../pages/StudentInfoPage/StudentInfoPage'
 import TestingPage from '../pages/TestingPage/Test'
 import GuestLayout from '../layout/GuestLayout/GuestLayout'
 import PrintPage from '../pages/Print/PrintPage'
+import PrinterManagementStudent from '../pages/PrinterManagement/PrintManagementStudent'
 
 const Router: React.FC = () => {
   const role = useSelector((state: RootState) => state.user.value.role)
@@ -63,6 +64,14 @@ const Router: React.FC = () => {
       element: (
         <MainLayout>
           <PrintPage />
+        </MainLayout>
+      )
+    },
+    {
+      path: '/manage',
+      element: (
+        <MainLayout>
+          <PrinterManagementStudent />
         </MainLayout>
       )
     },

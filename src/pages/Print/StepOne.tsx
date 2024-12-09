@@ -22,13 +22,13 @@ const Step1: React.FC = () => {
             className={`${styles.button} ${isInDropzone ? 'bg-black text-white' : 'bg-slate-50 text-black'} ${' focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 dark:bg-gray-800 dark:focus:ring-gray-700'}`}
             onClick={() => setIsInDropzone(true)}
           >
-            New Upload
+            Tải lên
           </button>
           <button
             className={`${styles.button} ${isInDropzone ? 'bg-slate-50 text-black' : 'bg-black text-white'} ${'focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 dark:bg-gray-800 dark:focus:ring-gray-700'}`}
             onClick={() => setIsInDropzone(false)}
           >
-            Recent
+            Gần đây
           </button>
         </div>
       </div>
