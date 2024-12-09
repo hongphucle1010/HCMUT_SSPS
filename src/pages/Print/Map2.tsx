@@ -1,8 +1,8 @@
 import React from 'react'
 import img_map2 from '../../assets/map2.png'
 import styles from './Map1.module.scss'
-import { LuArrowLeftCircle } from 'react-icons/lu'
 import { Link } from 'react-router-dom'
+import { TbCircleArrowLeft } from 'react-icons/tb'
 
 const Map2: React.FC = () => {
   return (
@@ -10,7 +10,7 @@ const Map2: React.FC = () => {
       <img src={img_map2} className={`${styles.center}`}></img>
       <Link to={'/print'}>
         <div className={`${styles.returnBtn} rounded-md	`}>
-          <LuArrowLeftCircle />
+          <TbCircleArrowLeft />
           <span>Quay về</span>
         </div>
       </Link>

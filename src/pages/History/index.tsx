@@ -19,24 +19,6 @@ interface DataType {
   numPages: number
   fileName: string
   status: 'Hoàn thành' | 'Đang in'
-  // login: {
-  //   uuid: string
-  // }
-}
-
-interface PrintingLog {
-  id: string
-  createdAt: Date
-  updatedAt: Date
-  studentId: string
-  printerId: string
-  fileName: string
-  startTime: Date
-  endTime: Date | null
-  pageSize: string
-  numPages: number
-  isDoubleSided: boolean
-  copies: number
 }
 
 const getPrinterById = (printerId: string, printerList: PrinterWithLocation[]): string => {

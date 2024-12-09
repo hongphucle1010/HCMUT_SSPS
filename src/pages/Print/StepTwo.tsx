@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { FaRegFilePdf } from 'react-icons/fa6'
 import { Link } from 'react-router-dom'
-import { LuArrowLeftCircle } from 'react-icons/lu'
-import { TbCircleArrowRight } from 'react-icons/tb'
+import { TbCircleArrowLeft, TbCircleArrowRight } from 'react-icons/tb'
 import styles2 from './StepTwo.module.scss'
 import img_ltk from '../../assets/map1.png'
 import img_dan from '../../assets/map2.png'
@@ -290,7 +289,7 @@ const Step2: React.FC = () => {
           className={`${styles2.btn} ${styles2.left_align_5} rounded-md cursor-pointer`}
           onClick={() => dispatch(removeFileReducer())}
         >
-          <LuArrowLeftCircle />
+          <TbCircleArrowLeft />
           <span>Quay về</span>
         </div>
         <div className={`${styles2.btn} rounded-md cursor-pointer`} onClick={() => dispatch(setOpenModal(true))}>

@@ -22,8 +22,6 @@ const RecentFile: React.FC = () => {
                 key={item.id} // Use unique ID as key
                 fileName={item.fileName}
                 updatedAt={item.createdAt.toLocaleString()} // Format Date to string for display
-                currentBalance={item.currentBalance ?? 0} // Add this line
-                // ...pass any additional required props here if necessary
               />
             ))}
           </Table.Body>
