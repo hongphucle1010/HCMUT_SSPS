@@ -13,75 +13,121 @@ import { RootState } from '../../lib/redux/store'
 import { getAllPrintersApi, printRequestApi } from '../../api/printer'
 import { Button, Modal } from 'flowbite-react'
 import { getStudentApi } from '../../api/user/student'
+import {
+  setOpenModal,
+  setNPage,
+  setPrintSz,
+  setPrintLocation,
+  setDblSided,
+  setWarning,
+  setCurrentBalance,
+  getFileHistoryReducer
+} from '../../lib/redux/reducers/printingState'
+import { getAllPrintingLogsApi } from '../../api/printer' // Ensure this import exists
 
 const Step2: React.FC = () => {
-  const [openModal, setOpenModal] = useState(false)
-  const [nPage, setNPage] = useState(0)
-  const [printSz, setPrintSz] = useState('none')
-  const [printLocation, setPrintLocation] = useState('none')
-  const [dblSided, setDblSided] = useState('none')
-  const [warning, setWarning] = useState(false)
-  const [warningMsg, setWarningMsg] = useState('none')
   const dispatch = useDispatch()
   const printingState = useSelector((state: RootState) => state.printingState.value)
-  const [currentBalance, setCurrentBalance] = useState(0)
+  const studentID = useSelector((state: RootState) => state.user.value).id
+
+  const openModal = useSelector((state: RootState) => state.printingState.value.openModal)
+  const nPage = useSelector((state: RootState) => state.printingState.value.nPage)
+  const printSz = useSelector((state: RootState) => state.printingState.value.printSz)
+  const printLocation = useSelector((state: RootState) => state.printingState.value.printLocation)
+  const dblSided = useSelector((state: RootState) => state.printingState.value.dblSided)
+  const warning = useSelector((state: RootState) => state.printingState.value.warning)
+  const warningMsg = useSelector((state: RootState) => state.printingState.value.warningMsg)
+  const currentBalance = useSelector((state: RootState) => state.printingState.value.currentBalance)
+
+  // Add local state for copies
+  const [localCopies, setLocalCopies] = useState<number>(nPage)
+
+  // Add state for finish printing modal
+  const [showFinishModal, setShowFinishModal] = useState<boolean>(false)
+
+  // Add state for error modal
+  const [showErrorModal, setShowErrorModal] = useState<boolean>(false)
+
+  // Add state for error message
+  const [errorMsg, setErrorMsg] = useState<string>('')
+
+  const handleCopiesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Number(e.target.value)
+    setLocalCopies(value)
+    dispatch(setNPage(value))
+  }
 
   const handleChange1 = (e: React.FormEvent<HTMLSelectElement>) => {
-    setPrintSz(e.currentTarget.value)
+    dispatch(setPrintSz(e.currentTarget.value))
   }
 
   const handleChange2 = (e: React.FormEvent<HTMLSelectElement>) => {
-    setPrintLocation(e.currentTarget.value)
+    dispatch(setPrintLocation(e.currentTarget.value))
   }
 
   const handleChange3 = (e: React.FormEvent<HTMLSelectElement>) => {
-    setDblSided(e.currentTarget.value)
+    dispatch(setDblSided(e.currentTarget.value))
   }
 
-  const studentID = useSelector((state: RootState) => state.user.value).id
-
-  const printNow = () => {
-    setOpenModal(false)
+  const printNow = async () => {
+    dispatch(setOpenModal(false))
     const printerID = printLocation
     if (printerID === 'none') {
-      setWarning(true)
-      setWarningMsg('máy in')
+      dispatch(setWarning({ warning: true, warningMsg: 'máy in' }))
       return
     }
     const pageSize = printSz
     if (pageSize === 'none') {
-      setWarning(true)
-      setWarningMsg('kích cỡ in')
+      dispatch(setWarning({ warning: true, warningMsg: 'kích cỡ in' }))
       return
     }
     let isDoubleSided = false
     if (dblSided === 'none') {
-      setWarning(true)
-      setWarningMsg('chế độ in')
+      dispatch(setWarning({ warning: true, warningMsg: 'chế độ in' }))
       return
     } else {
       isDoubleSided = dblSided === 'yes'
     }
     const copies = nPage
     if (copies == 0) {
-      setWarning(true)
-      setWarningMsg('số bản in khác 0')
+      dispatch(setWarning({ warning: true, warningMsg: 'số bản in khác 0' }))
       return
     }
-    printRequestApi({
-      studentId: studentID,
-      printerId: printerID,
-      fileName: printingState.file,
-      pageSize: pageSize,
-      numPages: 10,
-      isDoubleSided: isDoubleSided,
-      copies: copies,
-      currentBalance: currentBalance
-    }).then((response) => {
+
+    // Check if current balance is sufficient
+    if (currentBalance < copies) {
+      dispatch(setWarning({ warning: true, warningMsg: 'số lượng giấy còn lại không đủ' }))
+      return
+    }
+
+    try {
+      const response = await printRequestApi({
+        studentId: studentID,
+        printerId: printerID,
+        fileName: printingState.file,
+        pageSize: pageSize,
+        numPages: 10,
+        isDoubleSided: isDoubleSided,
+        copies: copies,
+        currentBalance: currentBalance
+      })
+
       if (response.status === 201) {
-        dispatch(removeFileReducer())
+        setShowFinishModal(true) // Show finish printing modal
+
+        // Fetch the updated printing history from the API
+        const printingLogsResponse = await getAllPrintingLogsApi()
+        dispatch(getFileHistoryReducer(printingLogsResponse))
       }
-    })
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      if (error.response?.data?.message) {
+        setErrorMsg(error.response.data.message)
+      } else {
+        setErrorMsg('Đã xảy ra lỗi khi in tài liệu. Vui lòng thử lại.')
+      }
+      setShowErrorModal(true) // Show error modal for any error
+    }
   }
 
   const StepTwo = () => {
@@ -102,8 +148,8 @@ const Step2: React.FC = () => {
                 <br />
                 <input
                   type='number'
-                  value={nPage}
-                  onChange={(e) => setNPage(Number(e.target.value))}
+                  value={localCopies}
+                  onChange={handleCopiesChange}
                   min={0}
                   max={50}
                   className={`${styles2.barwidth}`}
@@ -158,7 +204,7 @@ const Step2: React.FC = () => {
 
     useEffect(() => {
       getStudentApi(studentID).then((response) => {
-        setCurrentBalance(response.data.printBalance)
+        dispatch(setCurrentBalance(response.data.printBalance))
       })
     }, [])
     return (
@@ -176,7 +222,7 @@ const Step2: React.FC = () => {
                   Chọn vị trí
                 </option>
                 {printerList.map((printer) => (
-                  <option value={printer.id}>
+                  <option key={printer.id} value={printer.id}>
                     {(printer.location.campusName === 'DiAn' ? 'Dĩ An' : 'LTK') + ' - ' + printer.location.buildingName}
                   </option>
                 ))}
@@ -215,6 +261,24 @@ const Step2: React.FC = () => {
     )
   }
 
+  // Add a function to map warningMsg to user-friendly messages
+  const getWarningMessage = (msg: string): string => {
+    switch (msg) {
+      case 'máy in':
+        return 'Chưa chọn máy in.'
+      case 'kích cỡ in':
+        return 'Chưa chọn kích cỡ in.'
+      case 'chế độ in':
+        return 'Chưa chọn chế độ in.'
+      case 'số bản in khác 0':
+        return 'Số bản in phải lớn hơn 0.'
+      case 'số lượng giấy còn lại không đủ':
+        return 'Số lượng giấy còn lại không đủ.'
+      default:
+        return 'Có lỗi xảy ra. Vui lòng thử lại.'
+    }
+  }
+
   return (
     <div className={`${styles2.theWhole}`}>
       <div className={`${styles2.body}`}>
@@ -229,11 +293,11 @@ const Step2: React.FC = () => {
           <LuArrowLeftCircle />
           <span>Quay về</span>
         </div>
-        <div className={`${styles2.btn} rounded-md cursor-pointer`} onClick={() => setOpenModal(true)}>
+        <div className={`${styles2.btn} rounded-md cursor-pointer`} onClick={() => dispatch(setOpenModal(true))}>
           <span>In ngay</span>
           <TbCircleArrowRight />
         </div>
-        <Modal show={openModal} size='md' onClose={() => setOpenModal(false)} popup>
+        <Modal show={openModal} size='md' onClose={() => dispatch(setOpenModal(false))} popup>
           <Modal.Header />
           <Modal.Body>
             <div className='text-center'>
@@ -244,23 +308,72 @@ const Step2: React.FC = () => {
                 <Button color='blue' onClick={() => printNow()}>
                   {'Có, in ngay'}
                 </Button>
-                <Button color='failure' onClick={() => setOpenModal(false)}>
+                <Button color='failure' onClick={() => dispatch(setOpenModal(false))}>
                   {'Không, quay về'}
                 </Button>
               </div>
             </div>
           </Modal.Body>
         </Modal>
-        <Modal show={warning} size='md' onClose={() => setWarning(false)} popup>
+        <Modal
+          show={warning}
+          size='md'
+          onClose={() => dispatch(setWarning({ warning: false, warningMsg: 'none' }))}
+          popup
+        >
           <Modal.Header />
           <Modal.Body>
             <div className='text-center'>
               <h3 className='mb-5 text-lg font-normal text-gray-500 dark:text-gray-400' id='warningMsg'>
-                Làm ơn hãy chọn {warningMsg}
+                {getWarningMessage(warningMsg)}
               </h3>
               <div className='flex justify-center gap-4'>
-                <Button color='gray' onClick={() => setWarning(false)}>
+                <Button color='gray' onClick={() => dispatch(setWarning({ warning: false, warningMsg: 'none' }))}>
                   {'Quay về'}
+                </Button>
+              </div>
+            </div>
+          </Modal.Body>
+        </Modal>
+        {/* Add Finish Printing Modal */}
+        <Modal
+          show={showFinishModal}
+          size='md'
+          onClose={() => {
+            setShowFinishModal(false)
+            dispatch(removeFileReducer()) // Dispatch after closing modal
+          }}
+          popup
+        >
+          <Modal.Header />
+          <Modal.Body>
+            <div className='text-center'>
+              <h3 className='mb-5 text-lg font-normal text-gray-500 dark:text-gray-400'>
+                Đã hoàn thành việc in tài liệu.
+              </h3>
+              <div className='flex justify-center gap-4'>
+                <Button
+                  color='green'
+                  onClick={() => {
+                    setShowFinishModal(false)
+                    dispatch(removeFileReducer()) // Dispatch when closing via button
+                  }}
+                >
+                  {'Đóng'}
+                </Button>
+              </div>
+            </div>
+          </Modal.Body>
+        </Modal>
+        {/* Add Error Modal */}
+        <Modal show={showErrorModal} size='md' onClose={() => setShowErrorModal(false)} popup>
+          <Modal.Header />
+          <Modal.Body>
+            <div className='text-center'>
+              <h3 className='mb-5 text-lg font-normal text-red-500 dark:text-red-400'>{errorMsg}</h3>
+              <div className='flex justify-center gap-4'>
+                <Button color='failure' onClick={() => setShowErrorModal(false)}>
+                  {'Đóng'}
                 </Button>
               </div>
             </div>

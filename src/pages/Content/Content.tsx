@@ -4,8 +4,10 @@ import image3 from '../../assets/image 3.png'
 import androidIcon from '../../assets/android-globe.png'
 import styles from './Content.module.scss'
 import { Button } from 'flowbite-react'
+import { useNavigate } from 'react-router-dom'
 
 export default function Content() {
+  const navigate = useNavigate()
   return (
     <div className='grid grid-cols-5'>
       <div className='col-span-2 relative'>
@@ -15,9 +17,9 @@ export default function Content() {
           <p className='font-bold text-4xl mb-5'>HCMUT - SSPS</p>
           <p className='font-bold text-lg'>Dịch vụ in ấn thông minh</p>
           <p className='font-bold mb-5 text-lg'>Dành cho sinh viên trường Đại học Bách Khoa</p>
-          <Button outline gradientDuoTone='purpleToBlue' className='w-40'>
+          <Button outline gradientDuoTone='purpleToBlue' className='w-40' onClick={() => navigate('/manage')}>
             <div className='flex justify-between items-center w-full'>
-              <div className='font-bold'>HƯỚNG DẪN </div>
+              <div className='font-bold'>BẮT ĐẦU</div>
               <svg
                 className='w-6 h-6 text-gray-800 dark:text-white'
                 aria-hidden='true'

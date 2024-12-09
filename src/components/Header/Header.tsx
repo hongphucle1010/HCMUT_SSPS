@@ -31,11 +31,11 @@ const Header: React.FC = () => {
 
           <Dropdown label={user.name} arrowIcon={false} className={`shadow-md shadow-slate-200 z-10`} inline>
             <Dropdown.Item icon={HiOutlineAdjustments} onClick={() => navigate('/settings')}>
-              Settings
+              Cài đặt
             </Dropdown.Item>
             <Dropdown.Divider />
             <Dropdown.Item icon={MdLogout} onClick={() => navigate('/logout')}>
-              Log out
+              Đăng xuất
             </Dropdown.Item>
           </Dropdown>
         </div>

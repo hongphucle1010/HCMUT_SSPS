@@ -5,7 +5,7 @@ import { RootState } from '../../lib/redux/store'
 
 const RecentFile: React.FC = () => {
   // Get history from redux
-  const history = useSelector((state: RootState) => state.printingState.value.history)
+  const history = useSelector((state: RootState) => state.printingState.value.history).slice(0, 5)
 
   return (
     <div
@@ -14,11 +14,17 @@ const RecentFile: React.FC = () => {
         margin: 'auto'
       }}
     >
-      <div className='relative overflow-x-auto'>
+      <div className='relative overflow-x-hidden'>
         <Table>
           <Table.Body className={`divide-y`}>
             {history.map((item) => (
-              <SingleFileList fileName={item.fileName} updatedAt={item.updatedAt as unknown as string} />
+              <SingleFileList
+                key={item.id} // Use unique ID as key
+                fileName={item.fileName}
+                updatedAt={item.createdAt.toLocaleString()} // Format Date to string for display
+                currentBalance={item.currentBalance ?? 0} // Add this line
+                // ...pass any additional required props here if necessary
+              />
             ))}
           </Table.Body>
         </Table>

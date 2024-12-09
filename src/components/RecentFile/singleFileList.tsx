@@ -17,10 +17,14 @@ function getFileIcon(fileName: string) {
   }
 }
 
-const SingleFileList: React.FC<{
+interface SingleFileListProps {
   fileName: string
   updatedAt: string
-}> = ({ fileName, updatedAt }) => {
+  currentBalance: number // Added prop
+  // ...any other required props
+}
+
+const SingleFileList: React.FC<SingleFileListProps> = ({ fileName, updatedAt, currentBalance }) => {
   const UpdatedAt = new Date(updatedAt)
   const dispatch = useDispatch()
 
@@ -63,6 +67,7 @@ const SingleFileList: React.FC<{
       <Table.Cell className={`whitespace-nowrap font-medium text-gray-900 dark:text-white`}>
         <p style={{ fontWeight: 'bold' }}>{fileName}</p> <p>{timeElapsed}</p>
       </Table.Cell>
+      <Table.Cell>{currentBalance}</Table.Cell> {/* Display currentBalance */}
     </Table.Row>
   )
 }
