@@ -1,18 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-interface PrintingLog {
-  id: string
-  fileName: string
-  createdAt: Date
-  studentId: string
-  printerId: string
-  pageSize: string
-  isDoubleSided: boolean
-  copies: number
-  currentBalance?: number // Made optional
-  // ... any other required properties
-}
-
 interface PrintingState {
   value: {
     file: string
