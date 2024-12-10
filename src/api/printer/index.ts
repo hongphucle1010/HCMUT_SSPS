@@ -1,5 +1,11 @@
 import { apiClient } from '..'
-import { allPrinterPath, printerPath, printingLogPath } from '../../config/apiPath'
+import {
+  allPrinterPath,
+  printerPath,
+  printingLogPath,
+  spsoGetUnprintedPath,
+  spsoMarkAsPrintedPath
+} from '../../config/apiPath'
 
 export async function createPrinterApi(printer: PrinterCreateParams) {
   try {
@@ -62,6 +68,43 @@ export async function getAllPrintingLogsApi() {
       })
     })
     return newResponse
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+
+export async function getAllUnprintedLogsApi() {
+  try {
+    const response = await apiClient.get<PrintingLogResponse[]>(spsoGetUnprintedPath)
+    const newResponse: PrintingLog[] = []
+    response.data.forEach((log) => {
+      newResponse.push({
+        id: log.id,
+        createdAt: new Date(log.createdAt),
+        updatedAt: new Date(log.updatedAt),
+        studentId: log.studentId,
+        printerId: log.printerId,
+        fileName: log.fileName,
+        startTime: new Date(log.startTime),
+        endTime: log.endTime ? new Date(log.endTime) : null,
+        pageSize: log.pageSize,
+        numPages: log.numPages,
+        isDoubleSided: log.isDoubleSided,
+        copies: log.copies
+      })
+    })
+    return newResponse
+  } catch (error) {
+    console.error(error)
+    throw error
+  }
+}
+
+export async function markPrintedApi(id: string) {
+  try {
+    const response = await apiClient.put(spsoMarkAsPrintedPath, { id })
+    return response
   } catch (error) {
     console.error(error)
     throw error
