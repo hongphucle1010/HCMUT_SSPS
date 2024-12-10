@@ -26,7 +26,7 @@ import TestingPage from '../pages/TestingPage/Test'
 import GuestLayout from '../layout/GuestLayout/GuestLayout'
 import PrintPage from '../pages/Print/PrintPage'
 import PrinterManagementStudent from '../pages/PrinterManagement/PrintManagementStudent'
-
+import OrderManagement from '../pages/OrderManagement/order'
 const Router: React.FC = () => {
   const role = useSelector((state: RootState) => state.user.value.role)
   const userRoutes = [
@@ -174,6 +174,22 @@ const Router: React.FC = () => {
       element: (
         <AdminLayout>
           <ConfigurationPage />
+        </AdminLayout>
+      )
+    },
+    {
+      path: '/order-management',
+      element: (
+        <AdminLayout>
+          <OrderManagement />
+        </AdminLayout>
+      )
+    },
+    {
+      path: '/order-management',
+      element: (
+        <AdminLayout>
+          <OrderManagement />
         </AdminLayout>
       )
     },

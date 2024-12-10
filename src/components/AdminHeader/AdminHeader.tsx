@@ -28,6 +28,9 @@ const AdminHeader: React.FC = () => {
           <NavLink to='/configurations' className={({ isActive }) => (isActive ? `${styles['active-link']}` : '')}>
             Chỉnh sửa định dạng in ấn
           </NavLink>
+          <NavLink to='/order-management' className={({ isActive }) => (isActive ? `${styles['active-link']}` : '')}>
+            Quản lý đơn in
+          </NavLink>
           <Dropdown label={user.name} arrowIcon={false} className={`shadow-md shadow-slate-200 z-10`} inline>
             <Dropdown.Item icon={HiOutlineAdjustments} onClick={() => navigate('/settings')}>
               Settings
