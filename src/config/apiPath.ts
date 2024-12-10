@@ -13,6 +13,7 @@ export const getStatusPath = '/auth/status'
 export const spsoLogInPath = '/spso/login'
 export const spsoSignUpPath = '/spso/signup'
 export const spsoGetUnprintedPath = '/spso/getUnprintedPrintingLogs'
+export const spsoGetAllLogsPath = '/spso/getAllPrintingLogs'
 export const spsoMarkAsPrintedPath = '/spso/markPrintingLogAsPrinted'
 
 // Location
