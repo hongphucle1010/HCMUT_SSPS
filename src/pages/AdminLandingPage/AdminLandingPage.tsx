@@ -19,6 +19,12 @@ const AdminLandingPage: React.FC = () => {
         >
           Sửa định dạng
         </button>
+        <button
+          className='bg-blue-300 p-10 rounded-lg font-bold text-xl w-40 h-40 hover:bg-green-300 transition-colors duration-300'
+          onClick={() => navigate('/order-management')}
+        >
+          Quản lý
+        </button>
       </div>
     </div>
   )
