@@ -12,6 +12,8 @@ export const signUpPath = '/auth/signup'
 export const getStatusPath = '/auth/status'
 export const spsoLogInPath = '/spso/login'
 export const spsoSignUpPath = '/spso/signup'
+export const spsoGetUnprintedPath = '/spso/getUnprintedPrintingLogs'
+export const spsoMarkAsPrintedPath = '/spso/markPrintingLogAsPrinted'
 
 // Location
 export const locationPath = '/location'
